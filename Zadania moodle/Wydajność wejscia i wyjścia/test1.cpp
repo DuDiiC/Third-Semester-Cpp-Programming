@@ -75,7 +75,7 @@ int main() {
     #endif // C_FUNCTION
 
     #ifdef CPP_FUNCTION
-    operatory();
+    operators();
     #endif // CPP_FUNCTION
 
     return 0;
