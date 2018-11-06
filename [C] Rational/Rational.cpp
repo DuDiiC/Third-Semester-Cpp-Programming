@@ -11,16 +11,16 @@ class Rational {
 public:
     // constructor
 	Rational();
-	Rational(int numerator, int denominator = 1);
+	Rational(long long numerator, long long denominator = 1);
 	Rational(const Rational &r);
 
 	// getters
-	inline int getNumerator();
-	inline int getDenominator();
+	inline long long getNumerator();
+	inline long long getDenominator();
 
 	// setters
-	inline void setNumerator(int n);
-	inline void setDenominator(int d);
+	inline void setNumerator(long long n);
+	inline void setDenominator(long long d);
 
 	// overloading arithmetic operators
 	Rational operator+(Rational &r);
@@ -29,7 +29,7 @@ public:
 	Rational operator/(Rational &r);
 
     // exponentation
-	Rational exp(int exponent);
+	Rational exp(long long exponent);
 
 	// overloading relational operators
 	friend bool operator==(const Rational &r1, const Rational &r2);
@@ -43,16 +43,18 @@ public:
 	friend istream& operator>>(istream &input, Rational &r);
 
 	// continued fraction
-	static vector < int > createContinuedFraction(Rational r);
-	static void printContinuedFraction(vector < int > fracTab);
+	static vector < long long > createContinuedFraction(Rational r);
+	static void printContinuedFraction(vector < long long > fracTab);
+
+	void saveAsIrreducible();
 
 private:
-	int numerator;
-	int denominator;
+	long long numerator;
+	long long denominator;
 
-	static int gcd(int x, int y); // NWD
-	static int lcm(int x, int y); // NWW
-	void saveAsIrreducible();
+	static long long gcd(long long x, long long y); // NWD
+	static long long lcm(long long x, long long y); // NWW
+
 };
 
 
@@ -61,10 +63,13 @@ Rational::Rational() {
 	denominator = 1;
 }
 
-Rational::Rational(int numerator, int denominator) {
+Rational::Rational(long long numerator, long long denominator) {
     this->numerator = numerator;
     this->denominator = denominator;
-    this->saveAsIrreducible();
+    if(numerator != 0 && denominator != 0)
+        this->saveAsIrreducible();
+    else if (numerator == 0 && denominator == 0)
+        this->denominator = 0;
 }
 
 Rational::Rational(const Rational &r) {
@@ -73,41 +78,39 @@ Rational::Rational(const Rational &r) {
 	this->saveAsIrreducible();
 }
 
-inline int Rational::getNumerator() {
+inline long long Rational::getNumerator() {
     return this->numerator;
 }
 
-inline int Rational::getDenominator() {
+inline long long Rational::getDenominator() {
     return this->denominator;
 }
 
-inline void Rational::setNumerator(int n) {
+inline void Rational::setNumerator(long long n) {
     this->numerator = n;
 }
 
-inline void Rational::setDenominator(int d) {
+inline void Rational::setDenominator(long long d) {
     this->denominator = d;
 }
 
 Rational Rational::operator+(Rational &r) {
-    int x, y, z;
+    long long x, y, z;
     x = gcd(this->denominator, r.denominator);
     y = (this->numerator*(r.denominator/x)) + (r.numerator*(this->denominator/x));
     z = gcd(x, y);
 
     Rational r2 = Rational(y/z, (this->denominator/x)*(r.denominator/z));
-    r2.saveAsIrreducible();
     return r2;
 }
 
 Rational Rational::operator-(Rational &r) {
-    int x, y, z;
+    long long x, y, z;
     x = gcd(this->denominator, r.denominator);
     y = (this->numerator*(r.denominator/x)) - (r.numerator*(this->denominator/x));
     z = gcd(x, y);
 
     Rational r2 = Rational(y/z, (this->denominator/x)*(r.denominator/z));
-    r2.saveAsIrreducible();
     return r2;
 }
 
@@ -121,7 +124,7 @@ Rational Rational::operator/(Rational &r) {
     return r2;
 }
 
-Rational Rational::exp(int exponent) {
+Rational Rational::exp(long long exponent) {
     Rational r = Rational(this->numerator, this->denominator);
     for(int i = 1; i < exponent; i++) {
         r.numerator *= this->numerator;
@@ -136,16 +139,24 @@ bool operator==(const Rational &r1, const Rational &r2) {
 }
 
 bool operator<(const Rational &r1, const Rational &r2) {
-    double x, y;
-    x = (double)(r1.numerator)/(double)(r1.denominator);
-    y = (double)(r2.numerator)/(double)(r2.denominator);
-    return (x < y);
+
+    Rational r1c(r1), r2c(r2);
+    long long LCM = Rational::lcm(r1.denominator, r2.denominator);
+    r1c.numerator *= (LCM/r1.denominator);
+    r1c.denominator *= (LCM/r1.denominator);
+    r2c.numerator *= (LCM/r2.denominator);
+    r2c.denominator *= (LCM/r2.denominator);
+    return (r1c.numerator < r2c.numerator);
 }
 bool operator>(const Rational &r1, const Rational &r2) {
-    double x, y;
-    x = (double)(r1.numerator)/(double)(r1.denominator);
-    y = (double)(r2.numerator)/(double)(r2.denominator);
-    return (x > y);
+
+    Rational r1c(r1), r2c(r2);
+    long long LCM = Rational::lcm(r1.denominator, r2.denominator);
+    r1c.numerator *= (LCM/r1.denominator);
+    r1c.denominator *= (LCM/r1.denominator);
+    r2c.numerator *= (LCM/r2.denominator);
+    r2c.denominator *= (LCM/r2.denominator);
+    return (r1c.numerator > r2c.numerator);
 }
 
 bool operator<=(const Rational &r1, const Rational &r2) {
@@ -161,8 +172,9 @@ bool operator>=(const Rational &r1, const Rational &r2) {
 ostream& operator<<(ostream &output, const Rational &r) {
 	output << r.numerator;
 
-	if(r.denominator!=1)
+	if((r.denominator!=1) && (r.numerator != 0)) {
 		output << "|" << r.denominator;
+	}
 
 	return output;
 }
@@ -190,8 +202,8 @@ istream& operator>>(istream &input, Rational &r) {
     return input;
 }
 
-vector < int > Rational::createContinuedFraction(Rational r) {
-    vector <int> fracTab;
+vector < long long > Rational::createContinuedFraction(Rational r) {
+    vector <long long> fracTab;
     Rational frac = Rational(r);
     if(frac.numerator >= frac.denominator) {
         fracTab.push_back(frac.numerator/frac.denominator);
@@ -210,7 +222,7 @@ vector < int > Rational::createContinuedFraction(Rational r) {
     return fracTab;
 }
 
-void Rational::printContinuedFraction(vector < int > fracTab) {
+void Rational::printContinuedFraction(vector < long long > fracTab) {
     cout << "[" << fracTab[0] << ";";
     for(int i = 1; i < fracTab.size(); i++) {
         cout << fracTab[i];
@@ -220,9 +232,9 @@ void Rational::printContinuedFraction(vector < int > fracTab) {
 }
 
 
-int Rational::gcd(int x, int y) {
+long long Rational::gcd(long long x, long long y) {
 	while(y!=0) {
-		int r = x%y;
+		long long r = x%y;
 		x = y;
 		y = r;
 	}
@@ -230,8 +242,12 @@ int Rational::gcd(int x, int y) {
 	return x;
 }
 
+long long Rational::lcm(long long x, long long y) {
+    return (x*y)/gcd(x, y);
+}
+
 void Rational::saveAsIrreducible() {
-    int greatestCommonDivisor = gcd(numerator, denominator);
+    long long greatestCommonDivisor = gcd(numerator, denominator);
     numerator = numerator/greatestCommonDivisor;
     denominator = denominator/greatestCommonDivisor;
     if(numerator > 0 && denominator < 0) { /* for example for 3|-2, after arithmetic operations */
@@ -239,8 +255,6 @@ void Rational::saveAsIrreducible() {
         denominator = -denominator;
     }
 }
-
-
 
 int main(void) {
 
@@ -258,7 +272,7 @@ int main(void) {
     cout << "Ich iloraz: " << frac1 << " / " << frac2 << " = " << frac1/frac2 << endl;
 
     // potegowanie
-    int exponent;
+    long long exponent;
     cout << "Podaj wykladnik potegi do policzenia dla " << frac1 << ": ";
     cin >> exponent;
     cout << "(" << frac1 << ")^" << exponent << " = " << frac1.exp(exponent) << endl;
@@ -271,7 +285,7 @@ int main(void) {
     cout << "Czy " << frac1 << " jest mniejszy lub rowny od " << frac2 << "?: " << (frac1<=frac2 ? "tak" : "nie") << endl;
 
     // ulamki lancuchowe
-    vector<int> continuedFraction = Rational::createContinuedFraction(frac1);
+    vector<long long> continuedFraction = Rational::createContinuedFraction(frac1);
     cout << "Ulamek lancuchowy utworzony z " << frac1 << " to: ";
     Rational::printContinuedFraction(continuedFraction);
     cout << endl;
