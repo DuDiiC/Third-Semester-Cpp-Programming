@@ -4,6 +4,8 @@
 #include <algorithm>
 using namespace std;
 
+bool goodPermutation(vector < char >, vector < pair < char, char > >);
+
 int main() {
 
     string line, lineWithRules;
@@ -29,8 +31,21 @@ int main() {
 
         numberOfRules = rules.size();
 
+        do {
+            if(goodPermutation(letters, rules)) {
+                for(int i = 0; i < letters.size(); i++) {
+                    cout << letters[i];
+                }
+                cout << endl;
+            }
+        } while(next_permutation(letters.begin(), letters.end()));
+
         cout << endl;
     }
 
     return 0;
+}
+
+bool goodPermutation(vector < char > l, vector < pair < char, char > > r) {
+    return true;
 }
