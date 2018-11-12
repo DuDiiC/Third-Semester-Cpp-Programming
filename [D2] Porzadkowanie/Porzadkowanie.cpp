@@ -22,8 +22,7 @@ int main() {
         getline(cin, lineWithRules);
 
         for(int i = 0; i < lineWithRules.size(); i += 4) {
-            pair<char, char> rule (lineWithRules[i], lineWithRules[i+2]);
-            rules.push_back(rule);
+            rules.push_back(make_pair(lineWithRules[i], lineWithRules[i+2]));
         }
 
         numberOfRules = rules.size();
