@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+#include <algorithm>
 using namespace std;
 
 int main() {
@@ -18,6 +19,7 @@ int main() {
         }
 
         letterInAlphabet = letters.size();
+        sort(letters.begin(), letters.end());
 
         getline(cin, lineWithRules);
 
