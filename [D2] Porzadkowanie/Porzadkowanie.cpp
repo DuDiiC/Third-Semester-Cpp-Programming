@@ -8,10 +8,12 @@ bool goodPermutation(vector < char >, vector < pair < char, char > >);
 
 int main() {
 
-    string line, lineWithRules;
+    string line, lineWithRules, outOfLine = "";
 
     while(getline(cin, line)) {
 
+        cout << outOfLine;
+        outOfLine = "\n";
         vector < char > letters;
         vector < pair < char, char > > rules;
         int letterInAlphabet, numberOfRules;
@@ -39,8 +41,6 @@ int main() {
                 cout << endl;
             }
         } while(next_permutation(letters.begin(), letters.end()));
-
-        cout << endl;
     }
 
     return 0;
