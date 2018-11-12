@@ -47,5 +47,16 @@ int main() {
 }
 
 bool goodPermutation(vector < char > l, vector < pair < char, char > > r) {
+    for(int i = 0; i < r.size(); i++) {
+        const char *first = &r[i].first;
+        const char *second = &r[i].second;
+        vector<char>::iterator it1 = search(l.begin(), l.end(), first, first+1);
+        vector<char>::iterator it2 = search(l.begin(), l.end(), second, second+1);
+        int firstIndex = it1 - l.begin();
+        int secondIndex = it2 - l.begin();
+        if(firstIndex >= secondIndex) {
+            return false;
+        }
+    }
     return true;
 }
