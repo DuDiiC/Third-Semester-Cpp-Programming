@@ -52,35 +52,40 @@ public:
 };
 
 int howMuchSteps(Trie &t, string w, int temp) {
-    if(t.root.size() > 1) { // wiecej niz jeden lisc
-        if(ROOT) {
-            ROOT = false;
-        } else {
+    if(ROOT) { // poczatek
+        ROOT = false;
+        if(w.size() == 1) { // slowo jednoliterowe - w tym momencie nie ma znaczenia czy rozgalezienie jest czy nie, i tak trzeba te pierwsza litere wpisac
             temp++;
-        }
-        int position = t.isInBranch(w[0], t.root);
-        if(w.size() > 1) { // jesli slowo dluzsze niz jedna litera
-            return howMuchSteps(t.root[position], w.erase(0, 1), temp);
-        } else { // jesli tylko jedna litera
             return temp;
-        }
-    } else { // jesli tylko jeden lisc
-        if(w.size() > 1) { // jesli slowo dluzsze niz jedna litera
-            if(t.isEnd) { // jesli w tym miejscu jest koniec jakiegos slowa
-                if(ROOT) {
-                    ROOT = false;
-                } else {
-                    temp++;
-                }
-                return howMuchSteps(t.root[0], w.erase(0, 1), temp);
-            } else { // jesli nie ma tu konca, przesuwamy sie po prostu glebiej
-                return howMuchSteps(t.root[0], w.erase(0, 1), temp);
-            }
-        } else { // jesli tylko jedna litera
-            if(t.isEnd) {
+        } else { // slowo dluzsze niz jedna litera
+            if(t.root.size() > 1) { // wiecej niz jeden lisc
+                int position = t.isInBranch(w[0], t.root);
                 temp++;
+                return howMuchSteps(t.root[position], w.erase(0,1), temp);
+            } else { // jeden lisc tylko
+                temp++;
+                return howMuchSteps(t.root[0], w.erase(0,1), temp);
             }
-            return temp;
+        }
+    } else { // nie poczatek
+        if(w.size() == 1) { // slowo jednoliterowe
+            if(t.root.size() > 1 || t.isEnd == true) { // mamy rozgalezienie, albo koniec jakiegos slowa
+                temp++;
+                return temp;
+            } else { // nic z tych rzeczy :-)
+                return temp;
+            }
+        } else { // slowo dluzsze niz jedna litera
+            if(t.root.size() > 1) { // mamy rozgalezienie
+                int position = t.isInBranch(w[0], t.root);
+                temp++;
+                return howMuchSteps(t.root[position], w.erase(0,1), temp);
+            } else if(t.isEnd == true) { // nie mamy rozgalezienia, ale za to jest koniec jakiegos slowa
+                temp++;
+                return howMuchSteps(t.root[0], w.erase(0,1), temp);
+            } else { // nic z tych rzeczy :-)
+                return howMuchSteps(t.root[0], w.erase(0,1), temp);
+            }
         }
     }
 }
