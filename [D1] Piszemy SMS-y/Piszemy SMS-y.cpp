@@ -1,6 +1,15 @@
 #include <iostream>
+#define ALPHABET_SIZE 26
 
 using namespace std;
+
+class Node {
+
+};
+
+class Trie {
+
+};
 
 int main() {
 
