@@ -15,6 +15,16 @@ public:
         this->letter = letter;
         this->isEnd = isEnd;
     }
+
+    int isInBranch(char letter, vector <Trie> &newRoot) {
+        for(int i = 0; i < newRoot.size(); i++) {
+            if(newRoot[i].letter == letter) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 };
 
 int main() {
