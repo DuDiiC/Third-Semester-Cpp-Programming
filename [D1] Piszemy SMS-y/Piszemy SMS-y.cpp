@@ -1,8 +1,10 @@
 #include <iostream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
+bool ROOT = true;
 
 class Trie {
 
@@ -64,10 +66,20 @@ int main() {
             // add word to Trie
             words.push_back(word);
             T.addChild(word, T.root);
+            ROOT = true;
         }
 
+        int sum = 0;
+        for(int i = 0; i < words.size(); i++) {
+            sum += howMuchSteps(T, words[i], 0);
+            cout << howMuchSteps(T, words[i], 0) << endl;
+        }
+
+        double result = (double)sum/(double)words.size();
+
         cout.precision(2);
-        cout << /* result << */ endl;
+        cout << fixed;
+        cout <<  result <<  endl;
     }
 
     return 0;
