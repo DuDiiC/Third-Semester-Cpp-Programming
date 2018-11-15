@@ -25,6 +25,27 @@ public:
         return -1;
     }
 
+    void addChild(string word, vector < Trie > &newRoot) {
+        int position = isInBranch(word[0], newRoot);
+        if(position == -1) {
+            if(word.size() == 1) {
+                Trie newTrie(word[0], true);
+                newRoot.push_back(newTrie);
+                return;
+            } else {
+                Trie newTrie(word[0]);
+                newRoot.push_back(newTrie);
+                addChild(word.erase(0, 1), newRoot[newRoot.size()-1].root);
+            }
+        } else {
+            if(word.size() == 1) {
+                newRoot[position].isEnd = true;
+                return;
+            }
+            addChild(word.erase(0, 1), newRoot[position].root);
+        }
+    }
+
 };
 
 int main() {
