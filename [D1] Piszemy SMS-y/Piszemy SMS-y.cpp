@@ -1,5 +1,5 @@
 #include <iostream>
-#define ALPHABET_SIZE 26
+#include <vector>
 
 using namespace std;
 
