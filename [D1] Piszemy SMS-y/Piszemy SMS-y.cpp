@@ -6,6 +6,15 @@ using namespace std;
 
 class Trie {
 
+public:
+    vector < Trie > root;
+    bool isEnd;
+    char letter;
+
+    Trie(char letter, bool isEnd = false) {
+        this->letter = letter;
+        this->isEnd = isEnd;
+    }
 };
 
 int main() {
