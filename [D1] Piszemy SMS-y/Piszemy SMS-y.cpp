@@ -106,13 +106,12 @@ int main() {
             // add word to Trie
             words.push_back(word);
             T.addChild(word, T.root);
-            ROOT = true;
         }
 
         int sum = 0;
         for(int i = 0; i < words.size(); i++) {
             sum += howMuchSteps(T, words[i], 0);
-            cout << howMuchSteps(T, words[i], 0) << endl;
+            ROOT = true;
         }
 
         double result = (double)sum/(double)words.size();
