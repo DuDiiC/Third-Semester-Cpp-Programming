@@ -3,9 +3,6 @@
 
 using namespace std;
 
-class Node {
-
-};
 
 class Trie {
 
@@ -19,10 +16,14 @@ int main() {
     while(cin >> numberOfWords) {
 
         // create Trie and root
+        Trie T(NULL);
+        vector <string> words;
 
         for(int i = 0; i < numberOfWords; i++) {
             cin >> word;
             // add word to Trie
+            words.push_back(word);
+            T.addChild(word, T.root);
         }
 
         cout.precision(2);
