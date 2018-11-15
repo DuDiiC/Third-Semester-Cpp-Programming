@@ -48,7 +48,42 @@ public:
         }
     }
 
+    friend int howMuchSteps(Trie &t, string w, int temp);
 };
+
+int howMuchSteps(Trie &t, string w, int temp) {
+    if(t.root.size() > 1) { // wiecej niz jeden lisc
+        if(ROOT) {
+            ROOT = false;
+        } else {
+            temp++;
+        }
+        int position = t.isInBranch(w[0], t.root);
+        if(w.size() > 1) { // jesli slowo dluzsze niz jedna litera
+            return howMuchSteps(t.root[position], w.erase(0, 1), temp);
+        } else { // jesli tylko jedna litera
+            return temp;
+        }
+    } else { // jesli tylko jeden lisc
+        if(w.size() > 1) { // jesli slowo dluzsze niz jedna litera
+            if(t.isEnd) { // jesli w tym miejscu jest koniec jakiegos slowa
+                if(ROOT) {
+                    ROOT = false;
+                } else {
+                    temp++;
+                }
+                return howMuchSteps(t.root[0], w.erase(0, 1), temp);
+            } else { // jesli nie ma tu konca, przesuwamy sie po prostu glebiej
+                return howMuchSteps(t.root[0], w.erase(0, 1), temp);
+            }
+        } else { // jesli tylko jedna litera
+            if(t.isEnd) {
+                temp++;
+            }
+            return temp;
+        }
+    }
+}
 
 int main() {
 
