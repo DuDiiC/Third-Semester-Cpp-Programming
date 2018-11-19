@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <algorithm> // for reverse()
+#include <algorithm> // for reverse() and min()
 
 using namespace std;
 
@@ -31,8 +31,7 @@ int main() {
 
         int result = fuelConsumption(rows, miles);
 
-        cout << result << endl;
-        cout << endl;
+        cout << result << endl << endl;
     }
 
     return 0;
