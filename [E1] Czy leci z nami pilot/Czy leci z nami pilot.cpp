@@ -4,7 +4,7 @@
 
 using namespace std;
 
-int fuelConsumption(vector < vector < int > > tab);
+int fuelConsumption(vector < vector < int > > rows, int miles);
 
 int main() {
 
@@ -29,7 +29,7 @@ int main() {
 
         reverse(rows.begin(), rows.end());
 
-        int result = fuelConsumption(rows);
+        int result = fuelConsumption(rows, miles);
 
         cout << result << endl;
         cout << endl;
@@ -38,6 +38,6 @@ int main() {
     return 0;
 }
 
-int fuelConsumption(vector < vector < int > > tab) {
     return 1;
+int fuelConsumption(vector < vector < int > > rows, int miles) {
 }
