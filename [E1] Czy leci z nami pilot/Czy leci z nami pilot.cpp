@@ -41,6 +41,7 @@ int main() {
 int fuelConsumption(vector < vector < int > > rows, int miles) {
     vector < vector < int > > rowsSum(rows.size(), vector < int > (miles, 1000));
     rowsSum[0][0] = 30 - rows[0][0];
+    rowsSum[1][0] = 60 - rows[0][0];
 
     for(int i = 1; i < miles; i++) {
         for(int j = 0; j < rows.size(); j++) {
