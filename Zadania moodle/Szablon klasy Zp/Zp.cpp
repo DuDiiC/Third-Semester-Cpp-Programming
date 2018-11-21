@@ -20,7 +20,7 @@ public:
     }
 
     Z<p> operator* (Z<p> a) {
-
+        return Z(a.x*x);
     }
 
     Z<p> operator/ (Z<p> a) {
