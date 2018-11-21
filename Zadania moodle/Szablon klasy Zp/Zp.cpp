@@ -16,7 +16,7 @@ public:
     }
 
     Z<p> operator- (Z<p> a) {
-
+        return Z(x-a.x);
     }
 
     Z<p> operator* (Z<p> a) {
