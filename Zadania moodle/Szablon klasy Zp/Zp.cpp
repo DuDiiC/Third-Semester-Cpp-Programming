@@ -15,10 +15,25 @@ public:
         return Z(a.x+x);
     }
 
+    Z<p> operator- (Z<p> a) {
+
+    }
+
+    Z<p> operator* (Z<p> a) {
+
+    }
+
+    Z<p> operator/ (Z<p> a) {
+
+    }
+
     friend ostream & operator<< (ostream &output, const Z<p> &s){
         output << s.x;
         return output;
     }
+
+    friend istream & operator>> (istream &input, const Z<p> &s) {
+
     }
 };
 
