@@ -7,17 +7,18 @@ template <int p> class Z{
 public:
     Z<p> () {}
 
-    Z<p> (int y){
+    Z<p> (int y) {
         x = (y%p < 0) ? y%p + p : y%p;
     }
 
-    Z<p> operator+ (Z<p> a){
-            return Z(a.x+x);
+    Z<p> operator+ (Z<p> a) {
+        return Z(a.x+x);
     }
 
-    friend ostream & operator<< (ostream &wyjscie, const Z<p> &s){
-        wyjscie << s.x;
-        return wyjscie;
+    friend ostream & operator<< (ostream &output, const Z<p> &s){
+        output << s.x;
+        return output;
+    }
     }
 };
 
