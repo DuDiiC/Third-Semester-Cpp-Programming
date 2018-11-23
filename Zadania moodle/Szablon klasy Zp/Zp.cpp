@@ -24,6 +24,11 @@ public:
     }
 
     Z<p> operator/ (Z<p> a) {
+        a = odwrotny(a);
+        return Z(x*a.x);
+    }
+
+    Z<p> elementOdwrotny(Z<p>) {
 
     }
 
