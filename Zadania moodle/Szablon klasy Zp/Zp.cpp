@@ -48,8 +48,18 @@ public:
         return x > a.x;
     }
 
-    Z<p> elementOdwrotny(Z<p>) {
-
+    Z<p> elementOdwrotny() {
+        int temp1 = 1, temp2 = x, temp3 = 0, temp4 = p, temp5;
+        while (temp2) {
+            if(temp2 < temp4) {
+                swap(temp1, temp3);
+                swap(temp2, temp4);
+            }
+            temp5 = temp2/temp4;
+            temp1 -= temp5*temp3;
+            temp2 -= temp5*temp4;
+        }
+        return Z<p>(temp3);
     }
 
     friend ostream & operator<< (ostream &output, const Z<p> &s){
