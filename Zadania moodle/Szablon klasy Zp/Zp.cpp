@@ -32,6 +32,22 @@ public:
         return x == a.x;
     }
 
+    bool operator<= (Z<p> a) {
+        return x <= a.x;
+    }
+
+    bool operator< (Z<p> a) {
+        return x < a.x;
+    }
+
+    bool operator>= (Z<p> a) {
+        return x >= a.x;
+    }
+
+    bool operator> (Z<p> a) {
+        return x > a.x;
+    }
+
     Z<p> elementOdwrotny(Z<p>) {
 
     }
