@@ -57,8 +57,11 @@ public:
         return output;
     }
 
-    friend istream & operator>> (istream &input, const Z<p> &s) {
-
+    friend istream & operator>> (istream &input, Z<p> &s) {
+        int y;
+        input >> y;
+        s = Z<p>(y);
+        return input;
     }
 };
 
