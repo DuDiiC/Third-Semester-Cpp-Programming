@@ -76,9 +76,19 @@ public:
 };
 
 int main() {
-    Z<5> a(3);
-    a = Z<5>(-3);
-    cout << a;
+    cout << "Obliczenia wykonywane dla Zp, gdzie p jest dla przykladu rowne 23" << endl;
+
+    Z<23> a, b;
+    cout << "Podaj pierwsza liczbe: ";
+    cin >> a;
+    cout << "Podaj druga liczbe: ";
+    cin >> b;
+    cout << a << " + " << b << " = " << a+b << endl;
+    cout << a << " - " << b << " = " << a-b << endl;
+    cout << a << " * " << b << " = " << a*b << endl;
+    cout << a << " / " << b << " = " << a/b << endl;
+    cout << "Element odwrotny do " << a << " w ciele Z23 to " << a.elementOdwrotny() << endl;
+    cout << "Element odwrotny do " << b << " w ciele Z23 to " << b.elementOdwrotny() << endl;
 
     return 0;
 }
