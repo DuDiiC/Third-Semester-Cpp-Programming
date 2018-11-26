@@ -2,7 +2,7 @@
 
 using namespace std;
 
-template <int p> class Z{
+template <int p> class Z {
     int x;
 public:
     Z<p> () {}
@@ -62,7 +62,7 @@ public:
         return Z<p>(temp3);
     }
 
-    friend ostream & operator<< (ostream &output, const Z<p> &s){
+    friend ostream & operator<< (ostream &output, const Z<p> &s) {
         output << s.x;
         return output;
     }
@@ -75,7 +75,7 @@ public:
     }
 };
 
-int main(){
+int main() {
     Z<5> a(3);
     a = Z<5>(-3);
     cout << a;
