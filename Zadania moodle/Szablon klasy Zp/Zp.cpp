@@ -48,18 +48,18 @@ public:
         return x > a.x;
     }
 
-    Z<p> elementOdwrotny() {
-        int temp1 = 1, temp2 = x, temp3 = 0, temp4 = p, temp5;
-        while (temp2) {
-            if(temp2 < temp4) {
-                swap(temp1, temp3);
-                swap(temp2, temp4);
+    Z<p> elementOdwrotny() { //rozszerzony Euklides
+        int temp[5] = {1, x, 0, p, 0};
+        while (temp[1]) {
+            if(temp[1] < temp[3]) {
+                swap(temp[0], temp[2]);
+                swap(temp[1], temp[3]);
             }
-            temp5 = temp2/temp4;
-            temp1 -= temp5*temp3;
-            temp2 -= temp5*temp4;
+            temp[4] = temp[1]/temp[3];
+            temp[0] -= temp[4]*temp[2];
+            temp[1] -= temp[4]*temp[3];
         }
-        return Z<p>(temp3);
+        return Z<p>(temp[2]);
     }
 
     friend ostream & operator<< (ostream &output, const Z<p> &s) {
