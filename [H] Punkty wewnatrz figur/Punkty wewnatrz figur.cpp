@@ -59,6 +59,24 @@ public:
     }
 };
 
+class Circle : public Figure {
+public:
+    Point center;
+    double radius;
+
+    Circle(){};
+
+    Circle(Point c, double r) {
+        this->center = c;
+        this->radius = r;
+    }
+
+    virtual bool pointIsContained(Point p) {
+        if(pow((p.x - this->center.x), 2) + pow((p.y - this->center.y), 2) < pow(this->radius, 2)) return true;
+        else return false;
+    }
+};
+
 int main() {
 
 
