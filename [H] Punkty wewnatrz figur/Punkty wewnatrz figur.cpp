@@ -38,6 +38,27 @@ public:
     virtual bool pointIsContained(Point p){};
 };
 
+class Rectangle : public Figure {
+public:
+    Point upperLeft, lowerRight;
+
+    Rectangle(){};
+
+    Rectangle(Point uL, Point lR) {
+        this->upperLeft = uL;
+        this->lowerRight = lR;
+    }
+
+    virtual bool pointIsContained(Point p) {
+        if(p.x > upperLeft.x && p.x < lowerRight.x) {
+            if(p.y < upperLeft.y && p.y > lowerRight.y) {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
 int main() {
 
 
