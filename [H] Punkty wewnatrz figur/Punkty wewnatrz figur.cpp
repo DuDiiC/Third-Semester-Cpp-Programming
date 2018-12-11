@@ -77,6 +77,38 @@ public:
     }
 };
 
+class Triangle : public Figure {
+public:
+    Point p1st, p2nd, p3th;
+
+    Triangle(){};
+
+    Triangle(Point p1, Point p2, Point p3) {
+        this->p1st = p1;
+        this->p2nd = p2;
+        this->p3th = p3;
+    }
+
+    double sign(Point p1, Point p2, Point p3) {
+        return (((p1.x - p3.x) * (p2.y - p3.y)) - ((p2.x - p3.x) * (p1.y - p3.y)));
+    }
+
+    virtual bool pointIsContained(Point p) {
+        double d1, d2, d3;
+        bool negative, positive;
+
+        d1 = sign(p, p1st, p2nd);
+        d2 = sign(p, p2nd, p3th);
+        d3 = sign(p, p3th, p1st);
+
+        negative = ((d1 <= 0) || (d2 <= 0) || (d3 <= 0));
+        positive = ((d1 >= 0) || (d2 >= 0) || (d3 >= 0));
+
+        return !(positive && negative);
+    }
+};
+
+
 int main() {
 
 
