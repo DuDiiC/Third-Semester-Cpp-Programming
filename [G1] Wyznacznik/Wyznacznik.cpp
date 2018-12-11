@@ -8,23 +8,17 @@ int main() {
     int mSize;
     cin >> mSize;
     while(mSize) {
-        SquareMatrix < int > m(mSize);
+        SquareMatrix < long long > m(mSize);
         for(int i = 0; i < mSize; i++) {
-            vector < int > row;
+            vector < long long > row;
             for(int j = 0; j < mSize; j++) {
-                int temp;
+                long long temp;
                 cin >> temp;
                 row.push_back(temp);
             }
             m.matrix.push_back(row);
 
         }
-
-        m.printMatrix();
-        cout << endl;
-        m.multiplyColXByY(1, 2);
-        m2.printMatrix();
-        cout << endl;
 
         cout << m.determinant() << endl;
 
