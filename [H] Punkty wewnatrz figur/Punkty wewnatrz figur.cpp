@@ -111,6 +111,62 @@ public:
 
 int main() {
 
+    vector < Figure* > figures;
+    char fig;
+
+    while(cin >> fig) {
+
+        if(fig == '*') break;
+
+        if(fig == 'r') {
+
+            double x1, y1, x2, y2;
+            cin >> x1 >> y1 >> x2 >> y2;
+            Point p1(x1, y1);
+            Point p2(x2, y2);
+            Figure *f = new Rectangle(p1, p2);
+            figures.push_back(f);
+
+        } else if(fig == 'c') {
+
+            double xC, yC, r;
+            cin >> xC >> yC >> r;
+            Point c(xC, yC);
+            Figure *f = new Circle(c, r);
+            figures.push_back(f);
+
+        } else if(fig == 't') {
+
+            double x1, y1, x2, y2, x3, y3;
+            cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3;
+            Point p1(x1, y1), p2(x2, y2), p3(x3, y3);
+            Figure *f = new Triangle(p1, p2, p3);
+            figures.push_back(f);
+        }
+    }
+
+    Point example;
+    int pointNumber = 0;
+    while(cin >> example) {
+        if(example.x == 9999.9 && example.y == 9999.9) break;
+
+        pointNumber++;
+        bool isContained = false;
+        for(int i = 0; i < figures.size(); i++) {
+            if(figures[i]->pointIsContained(example)) {
+                isContained = true;
+                cout << "Point " << pointNumber << " is contained in figure " << i+1 << endl;
+            }
+        }
+
+        if(isContained == false) {
+            cout << "Point " << pointNumber << " is not contained in any figure" << endl;
+        }
+    }
+
+    for(int i = 0; i < figures.size(); i++) {
+        delete figures[i];
+    }
 
     return 0;
 }
