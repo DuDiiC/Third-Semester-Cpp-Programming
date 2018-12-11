@@ -33,6 +33,11 @@ ostream& operator<<(ostream &output, const Point &p) {
     return output;
 }
 
+class Figure {
+public:
+    virtual bool pointIsContained(Point p){};
+};
+
 int main() {
 
 
