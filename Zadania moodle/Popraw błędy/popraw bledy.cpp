@@ -1,56 +1,71 @@
-<span syntax="c++">
 #include <iostream>
 
 using namespace std;
 
-class user{
-    private:
+class user {
+    protected:
         string name;
     public:
-        string introduce(){
+        virtual string introduce() const {
             return name;
         }
-    ostream& operator<<(ostream &o, user &u);
-}
+        friend ostream &operator<<(ostream &o, const user &u);
+};
 
-ostream& operator<<(ostream &o, const user &u){
-    o << (u.introduce());
+ostream &operator<<(ostream &o, const user &u) {
+    o << u.introduce();
     return o;
 }
 
-class adm: public virtual user{
+class adm: public virtual user {
     public:
-        string introduce(){
-            return user::introduce()+&quot; (Administrator)&quot;;
+        string introduce() const {
+            return user::introduce()+" (Administrator)";
         }
+        adm(string s){name=s;}
 };
 
-class author: public user{
+class author: public virtual user{
     protected:
         int number;
-        author(string s){name=s; number=0;}
-        void newArticle(){number++; cout<<"New article added"<<endl;}
-        string introduce(){
+    public:
+        author(string s) { name=s; number=0; }
+        void newArticle() { number++; cout << "New article added" << endl; }
+        string introduce()const {
             return user::introduce()+" (Author)";
         }
 };
 
-class normal: protected user{
+class normal: public user {
     public:
-        normal(string s){name=s;}
+        normal(string s) { name=s; }
 };
 
-class superadm: public adm, protected author{
+class superadm: public adm, public author {
     public:
-        superadm(string s):adm(s),author(s){}
-        string introduce(){
-            return name+" (Super administrator)";
+        superadm(string s):adm(s),author(s) {
+            this->author::name=s;
+            this->adm::name=s;
+            this->author::number=0;
         }
-    private
+        string introduce() const {
+            return this->author::name+" (Super administrator)";
+        }
         using author::newArticle;
 };
 
-int main(){
+ostream &operator<<(ostream &o, const adm &a) {
+    o << a.introduce();
+    return o;
+}
+
+ostream &operator<<(ostream &o, const author &a) {
+    o << a.introduce();
+    return o;
+}
+
+
+int main() {
     user* tab[5];
     normal user0("Arnold");
     normal user1("Alfred");
@@ -62,7 +77,7 @@ int main(){
     tab[2] = &user2;
     tab[3] = &user3;
     tab[4] = &user4;
-    for(int i=0; i&lt;5; ++i){
+    for(int i=0; i<5; ++i) {
         cout << tab[i]->introduce() << endl;
         cout << *tab[i] << endl;
     }
@@ -70,4 +85,3 @@ int main(){
     user4.newArticle();
     return 0;
 }
-</span>
