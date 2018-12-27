@@ -75,8 +75,28 @@ int main() {
 
     }
 
-
-
     return 0;
 }
 
+bool operator==(const Word &w1, const Word &w2) {
+    if(w1.word.size() == w2.word.size() &&
+       w1.word[0] == w2.word[0] &&
+       w1.word[w1.word.size()-1] == w2.word[w2.word.size()-1]) {
+        return 1;
+    }
+    return 0;
+}
+
+ostream& operator<<(ostream &output, const Word &w) {
+    output << w.word;
+    return output;
+}
+
+istream& operator>>(istream &input, Word &w) {
+    input >> w.word;
+    return input;
+}
+
+Word::Word(string w) {
+    this->word = w;
+}
