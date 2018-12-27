@@ -23,29 +23,6 @@ int main() {
 
     while(cases--) {
 
-        // read words to recode
-        vector < Word > words;
-        string testLine;
-        getline(cin, testLine);
-        for(int i = 0; i < testLine.size(); i++) {
-            string oneWord = "";
-            while(testLine[i] != ' ' && i < testLine.size()) {
-                oneWord += testLine[i];
-                i++;
-            }
-            bool belong = false;
-            for(int j = 0; j < words.size(); j++) {
-                if(oneWord == words[i]) belong = true;
-            }
-            if(!belong) words.push_back(oneWord);
-        }
-
-        // test output
-        /*for(int i = 0; i < words.size(); i++) {
-            cout << words[i] << " ";
-        }
-        cout << endl;*/
-
         // create dictionary
         vector < vector < Word > > dictionary;
         for(int i = 0; i <= 200; i++) {
@@ -62,7 +39,15 @@ int main() {
                 oneWord += dictionaryLine[i];
                 i++;
             }
-            dictionary[oneWord.size()].push_back(oneWord);
+            Word w(oneWord);
+            bool belong = false;
+            for(int j = 0; j < dictionary[w.word.size()-1].size(); j++) {
+                if(w == dictionary[w.word.size()-1][j]) {
+                    belong = true;
+                }
+            }
+            if(!belong)
+                dictionary[oneWord.size()-1].push_back(w);
         }
 
         // test output
@@ -72,6 +57,40 @@ int main() {
             }
         }
         cout << endl;*/
+
+        // read words to recode
+        vector < Word > words;
+        string testLine;
+        getline(cin, testLine);
+        for(int i = 0; i < testLine.size(); i++) {
+            string oneWord = "";
+            while(testLine[i] != ' ' && i < testLine.size()) {
+                oneWord += testLine[i];
+                i++;
+            }
+            Word w(oneWord);
+            words.push_back(w);
+        }
+
+        // test output
+        /*for(int i = 0; i < words.size(); i++) {
+            cout << words[i] << " ";
+        }
+        cout << endl;*/
+
+        // output
+        for(int i = 0; i < words.size(); i++) {
+            bool belong = false;
+            for(int j = 0; j < dictionary[words[i].word.size()-1].size(); j++) {
+                if(words[i] == dictionary[words[i].word.size()-1][j]) {
+                    belong = true;
+                    cout << dictionary[words[i].word.size()-1][j] << " ";
+                    break;
+                }
+            }
+            if(!belong) cout << words[i] << " ";
+        }
+        cout << endl;
 
     }
 
