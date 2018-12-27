@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <vector>
+#include <sstream>
+#include <cstdio>
 using namespace std;
 
 class Word {
@@ -15,40 +17,17 @@ public:
     friend istream& operator>>(istream &input, Word &w);
 };
 
+vector < Word > getTestLine(char str[]);
+vector < vector < Word > > getDictionaryLine(char s[]);
+
 int main() {
 
-    string casesLine;
-    getline(cin, casesLine);
-    int cases = strtol(casesLine.c_str(), NULL, 10);
-
-    while(cases--) {
+    char str[10000];
+    gets(str);
+    while(gets(str)) {
 
         // create dictionary
-        vector < vector < Word > > dictionary;
-        for(int i = 0; i <= 200; i++) {
-            vector < Word > w;
-            dictionary.push_back(w);
-        }
-
-        // read words into dictionary
-        string dictionaryLine;
-        getline(cin, dictionaryLine);
-        for(int i = 0; i < dictionaryLine.size(); i++) {
-            string oneWord = "";
-            while(dictionaryLine[i] != ' ' && i < dictionaryLine.size()) {
-                oneWord += dictionaryLine[i];
-                i++;
-            }
-            Word w(oneWord);
-            bool belong = false;
-            for(int j = 0; j < dictionary[w.word.size()-1].size(); j++) {
-                if(w == dictionary[w.word.size()-1][j]) {
-                    belong = true;
-                }
-            }
-            if(!belong)
-                dictionary[oneWord.size()-1].push_back(w);
-        }
+        vector < vector < Word > > dictionary = getDictionaryLine(str);
 
         // test output
         /*for(int i = 0; i < dictionary.size(); i++) {
@@ -59,18 +38,8 @@ int main() {
         cout << endl;*/
 
         // read words to recode
-        vector < Word > words;
-        string testLine;
-        getline(cin, testLine);
-        for(int i = 0; i < testLine.size(); i++) {
-            string oneWord = "";
-            while(testLine[i] != ' ' && i < testLine.size()) {
-                oneWord += testLine[i];
-                i++;
-            }
-            Word w(oneWord);
-            words.push_back(w);
-        }
+        gets(str);
+        vector < Word > words = getTestLine(str);
 
         // test output
         /*for(int i = 0; i < words.size(); i++) {
@@ -118,4 +87,45 @@ istream& operator>>(istream &input, Word &w) {
 
 Word::Word(string w) {
     this->word = w;
+}
+
+vector < Word > getTestLine(char str[]) {
+
+    stringstream textStream(str);
+    string temp;
+    vector < Word > test;
+
+    while(textStream >> temp) {
+        Word w(temp);
+        test.push_back(w);
+    }
+
+    return test;
+}
+
+vector < vector < Word > > getDictionaryLine(char s[]) {
+
+    stringstream textStream(s);
+    string temp;
+    vector < vector < Word > > dic;
+    for(int i = 0; i <= 200; i++) {
+        vector < Word > w;
+        dic.push_back(w);
+    }
+
+    while(textStream >> temp) {
+        Word w(temp);
+        bool belong = false;
+        for(int i = 0; i < dic[temp.size()-1].size(); i++) {
+            if(w == dic[temp.size()-1][i]) {
+                belong = true;
+                break;
+            }
+        }
+        if(!belong) {
+            dic[temp.size()-1].push_back(w);
+        }
+    }
+
+    return dic;
 }
