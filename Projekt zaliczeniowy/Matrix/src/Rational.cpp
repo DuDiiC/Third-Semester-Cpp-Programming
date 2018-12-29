@@ -14,6 +14,23 @@ Rational::Rational(long long numerator, long long denominator) {
         this->denominator = 0;
 }
 
+Rational::Rational(string fraction) {
+    int linePosition = fraction.find('|');
+
+    if(linePosition != string::npos) { /* numerator|denominator */
+        string num, den;
+        num = fraction.substr(0, linePosition);
+        den = fraction.substr(linePosition+1, fraction.size()-1);
+        this->numerator = strtol(num.c_str(), NULL, 10);
+        this->denominator = strtol(den.c_str(), NULL, 10);
+    } else { /* only numerator */
+        this->numerator = strtol(fraction.c_str(), NULL, 10);
+        this->denominator = 1;
+    }
+
+    this->saveAsIrreducible();
+}
+
 Rational::Rational(const Rational &r) {
 	this->numerator = r.numerator;
 	this->denominator = r.denominator;

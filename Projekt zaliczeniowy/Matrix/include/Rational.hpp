@@ -13,6 +13,7 @@ public:
     // constructor
 	Rational();
 	Rational(long long numerator, long long denominator = 1);
+	Rational(string fraction);
 	Rational(const Rational &r);
 
 	// getters
