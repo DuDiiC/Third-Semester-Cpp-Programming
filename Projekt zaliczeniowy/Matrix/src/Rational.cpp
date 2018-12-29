@@ -124,14 +124,14 @@ ostream& operator<<(ostream &output, const Rational &r) {
 istream& operator>>(istream &input, Rational &r) {
 
     string fraction;
-    cin >> fraction;
+    input >> fraction;
 
     int linePosition = fraction.find('|');
 
     if(linePosition != string::npos) { /* numerator|denominator */
         string num, den;
         num = fraction.substr(0, linePosition);
-        den = fraction.substr(linePosition+1, den.size()-1);
+        den = fraction.substr(linePosition+1, fraction.size()-1);
         r.numerator = strtol(num.c_str(), NULL, 10);
         r.denominator = strtol(den.c_str(), NULL, 10);
     } else { /* only numerator */
