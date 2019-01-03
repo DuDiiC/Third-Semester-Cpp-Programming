@@ -1,8 +1,8 @@
 #include "Rational.hpp"
 
 Rational::Rational() {
-	numerator = 0;
-	denominator = 1;
+    numerator = 0;
+    denominator = 1;
 }
 
 Rational::Rational(long long numerator, long long denominator) {
@@ -15,45 +15,58 @@ Rational::Rational(long long numerator, long long denominator) {
 }
 
 Rational::Rational(string fraction) {
-    int linePosition = fraction.find('|');
 
-    if(linePosition != string::npos) { /* numerator|denominator */
-        string num, den;
-        num = fraction.substr(0, linePosition);
-        den = fraction.substr(linePosition+1, fraction.size()-1);
-        this->numerator = strtol(num.c_str(), NULL, 10);
-        this->denominator = strtol(den.c_str(), NULL, 10);
-    } else { /* only numerator */
-        this->numerator = strtol(fraction.c_str(), NULL, 10);
+    if(fraction == "" || fraction == "i") { // for complex in format 'i'
+
+        this->numerator = 1;
         this->denominator = 1;
-    }
 
-    this->saveAsIrreducible();
+    } else if(fraction == "-" || fraction == "-i") { // for complex in format '-i'
+        this->numerator = -1;
+        this->denominator = 1;
+
+    } else {
+
+        int linePosition = fraction.find('|');
+
+        if(linePosition != string::npos) { /* numerator|denominator */
+            string num, den;
+            num = fraction.substr(0, linePosition);
+            den = fraction.substr(linePosition+1, fraction.size()-1);
+            this->numerator = strtol(num.c_str(), NULL, 10);
+            this->denominator = strtol(den.c_str(), NULL, 10);
+        } else { /* only numerator */
+            this->numerator = strtol(fraction.c_str(), NULL, 10);
+            this->denominator = 1;
+        }
+
+        this->saveAsIrreducible();
+    }
 }
 
 Rational::Rational(const Rational &r) {
-	this->numerator = r.numerator;
-	this->denominator = r.denominator;
-	this->saveAsIrreducible();
+    this->numerator = r.numerator;
+    this->denominator = r.denominator;
+    this->saveAsIrreducible();
 }
 
-inline long long Rational::getNumerator() {
+long long Rational::getNumerator() const {
     return this->numerator;
 }
 
-inline long long Rational::getDenominator() {
+long long Rational::getDenominator() const {
     return this->denominator;
 }
 
-inline void Rational::setNumerator(long long n) {
+void Rational::setNumerator(long long n) {
     this->numerator = n;
 }
 
-inline void Rational::setDenominator(long long d) {
+void Rational::setDenominator(long long d) {
     this->denominator = d;
 }
 
-Rational Rational::operator+(Rational &r) {
+Rational Rational::operator+(const Rational &r) const {
     long long x, y, z;
     x = gcd(this->denominator, r.denominator);
     y = (this->numerator*(r.denominator/x)) + (r.numerator*(this->denominator/x));
@@ -63,7 +76,12 @@ Rational Rational::operator+(Rational &r) {
     return r2;
 }
 
-Rational Rational::operator-(Rational &r) {
+Rational& Rational::operator+=(const Rational &r) {
+    *this = (*this)+r;
+    return *this;
+}
+
+Rational Rational::operator-(const Rational &r) const {
     long long x, y, z;
     x = gcd(this->denominator, r.denominator);
     y = (this->numerator*(r.denominator/x)) - (r.numerator*(this->denominator/x));
@@ -73,14 +91,29 @@ Rational Rational::operator-(Rational &r) {
     return r2;
 }
 
-Rational Rational::operator*(Rational &r) {
+Rational& Rational::operator-=(const Rational &r) {
+    *this = (*this)-r;
+    return *this;
+}
+
+Rational Rational::operator*(const Rational &r) const {
     Rational r2 = Rational((this->numerator*r.numerator), (this->denominator*r.denominator));
     return r2;
 }
 
-Rational Rational::operator/(Rational &r) {
+Rational& Rational::operator*=(const Rational &r) {
+    *this = (*this)*r;
+    return *this;
+}
+
+Rational Rational::operator/(const Rational &r) const {
     Rational r2 = Rational((this->numerator*r.denominator), (this->denominator*r.numerator));
     return r2;
+}
+
+Rational& Rational::operator/=(const Rational &r) {
+    *this = (*this)/r;
+    return *this;
 }
 
 Rational Rational::exp(long long exponent) {
@@ -119,23 +152,27 @@ bool operator>(const Rational &r1, const Rational &r2) {
 }
 
 bool operator<=(const Rational &r1, const Rational &r2) {
-    if((r1 < r2) || (r1 == r2)) return true;
-    else return false;
+    if((r1 < r2) || (r1 == r2))
+        return true;
+    else
+        return false;
 }
 
 bool operator>=(const Rational &r1, const Rational &r2) {
-    if((r1 > r2) || (r1 == r2)) return true;
-    else return false;
+    if((r1 > r2) || (r1 == r2))
+        return true;
+    else
+        return false;
 }
 
 ostream& operator<<(ostream &output, const Rational &r) {
-	output << r.numerator;
+    output << r.numerator;
 
-	if((r.denominator!=1) && (r.numerator != 0)) {
-		output << "|" << r.denominator;
-	}
+    if((r.denominator!=1) && (r.numerator != 0)) {
+        output << "|" << r.denominator;
+    }
 
-	return output;
+    return output;
 }
 
 istream& operator>>(istream &input, Rational &r) {
@@ -161,14 +198,44 @@ istream& operator>>(istream &input, Rational &r) {
     return input;
 }
 
-long long Rational::gcd(long long x, long long y) {
-	while(y!=0) {
-		long long r = x%y;
-		x = y;
-		y = r;
-	}
+/*vector < long long > Rational::createContinuedFraction(Rational r) {
+    vector <long long> fracTab;
+    Rational frac = Rational(r);
+    if(frac.numerator >= frac.denominator) {
+        fracTab.push_back(frac.numerator/frac.denominator);
+    } else {
+        fracTab.push_back(0);
+    }
 
-	return x;
+    do {
+        frac.numerator %= frac.denominator;
+        swap(frac.numerator, frac.denominator);
+        fracTab.push_back(frac.numerator/frac.denominator);
+
+        if(frac.numerator%frac.denominator == 0) break;
+    } while(frac.denominator != 1);
+
+    return fracTab;
+}
+
+void Rational::printContinuedFraction(vector < long long > fracTab) {
+    cout << "[" << fracTab[0] << ";";
+    for(int i = 1; i < fracTab.size(); i++) {
+        cout << fracTab[i];
+        if(i != fracTab.size()-1) cout << ",";
+    }
+    cout << "]";
+}*/
+
+
+long long Rational::gcd(long long x, long long y) {
+    while(y!=0) {
+        long long r = x%y;
+        x = y;
+        y = r;
+    }
+
+    return x;
 }
 
 long long Rational::lcm(long long x, long long y) {

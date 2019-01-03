@@ -7,52 +7,59 @@
 #define RATIONAL_HPP
 
 
-class Rational
-{
+class Rational {
+
 public:
     // constructor
-	Rational();
-	Rational(long long numerator, long long denominator = 1);
-	Rational(string fraction);
-	Rational(const Rational &r);
+    Rational();
+    Rational(long long, long long = 1);
+    Rational(string);
+    Rational(const Rational&);
 
-	// getters
-	inline long long getNumerator();
-	inline long long getDenominator();
+    // getters
+    long long getNumerator() const;
+    long long getDenominator() const;
 
-	// setters
-	inline void setNumerator(long long n);
-	inline void setDenominator(long long d);
+    // setters
+    void setNumerator(long long);
+    void setDenominator(long long);
 
-	// overloading arithmetic operators
-	Rational operator+(Rational &r);
-	Rational operator-(Rational &r);
-	Rational operator*(Rational &r);
-	Rational operator/(Rational &r);
+    // overloading arithmetic operators
+    Rational operator+(const Rational&) const;
+    Rational& operator+=(const Rational&);
+    Rational operator-(const Rational&) const;
+    Rational& operator-=(const Rational&);
+    Rational operator*(const Rational&) const;
+    Rational& operator*=(const Rational&);
+    Rational operator/(const Rational&) const;
+    Rational& operator/=(const Rational&);
 
     // exponentation
-	Rational exp(long long exponent);
+    Rational exp(long long);
 
-	// overloading relational operators
-	friend bool operator==(const Rational &r1, const Rational &r2);
-	friend bool operator<(const Rational &r1, const Rational &r2);
-	friend bool operator>(const Rational &r1, const Rational &r2);
-	friend bool operator<=(const Rational &r1, const Rational &r2);
-	friend bool operator>=(const Rational &r1, const Rational &r2);
+    // overloading relational operators
+    friend bool operator==(const Rational &r1, const Rational &r2);
+    friend bool operator<(const Rational &r1, const Rational &r2);
+    friend bool operator>(const Rational &r1, const Rational &r2);
+    friend bool operator<=(const Rational &r1, const Rational &r2);
+    friend bool operator>=(const Rational &r1, const Rational &r2);
 
-	// overliading operators << and >>
-	friend ostream& operator<<(ostream &output, const Rational &r);
-	friend istream& operator>>(istream &input, Rational &r);
+    // overliading operators << and >>
+    friend ostream& operator<<(ostream &output, const Rational &r);
+    friend istream& operator>>(istream &input, Rational &r);
 
-	void saveAsIrreducible();
+    // continued fraction
+    //static vector < long long > createContinuedFraction(Rational r);
+    //static void printContinuedFraction(vector < long long > fracTab);
+
+    void saveAsIrreducible();
 
 private:
-	long long numerator;
-	long long denominator;
+    long long numerator;
+    long long denominator;
 
-	static long long gcd(long long x, long long y); // NWD
-	static long long lcm(long long x, long long y); // NWW
-
+    static long long gcd(long long, long long); // NWD
+    static long long lcm(long long, long long); // NWW
 };
 
 #endif // RATIONAL_HPP
