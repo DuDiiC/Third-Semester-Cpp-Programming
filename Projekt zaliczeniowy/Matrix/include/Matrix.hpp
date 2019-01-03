@@ -34,6 +34,20 @@ public:
     Matrix<T, R, C> operator-(const Matrix<T, R, C>&) const;
     Matrix<T, R, C>& operator-=(const Matrix<T, R, C>&);
 
+    template <unsigned int D>
+    friend Matrix<T, R, D> operator*(const Matrix<T, R, C> &M1, const Matrix<T, C, D> &M2) { // WHY HAVE TO BE IN CLASS ??
+        Matrix<T, R, D> newMatrix;
+        for(int i = 0; i < R; i++) {
+            for(int j = 0; j < D; j++) {
+                T temp(0);
+                for(int k = 0; k < C; k++) {
+                    temp = temp+(M1.matrix[i][k]*M2.matrix[k][j]);
+                }
+                newMatrix.matrix[i].push_back(temp);
+            }
+        }
+        return newMatrix;
+    }
 
     // overloading == operator
     bool operator==(const Matrix<T, R, C>&);
