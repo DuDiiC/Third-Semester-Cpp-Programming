@@ -1,0 +1,50 @@
+# depslib dependency file v1.0
+1546698862 source:d:\maciej dudek\documents\studia\rok ii\i semestr\p c++\zadania z labów\projekt zaliczeniowy\matrix\main.cpp
+	"headers.hpp"
+	"Matrix.hpp"
+	"SquareMatrix.hpp"
+	"Rational.hpp"
+	"Complex.hpp"
+	"Zp.hpp"
+
+1546530947 source:d:\maciej dudek\documents\studia\rok ii\i semestr\p c++\zadania z labów\projekt zaliczeniowy\matrix\src\squarematrix.cpp
+
+1546016185 d:\maciej dudek\documents\studia\rok ii\i semestr\p c++\zadania z labów\projekt zaliczeniowy\matrix\include\headers.hpp
+	<iostream>
+	<vector>
+	<cmath>
+	<string>
+	<cstdlib>
+
+1546690874 d:\maciej dudek\documents\studia\rok ii\i semestr\p c++\zadania z labów\projekt zaliczeniowy\matrix\include\matrix.hpp
+	"headers.hpp"
+
+1546702591 d:\maciej dudek\documents\studia\rok ii\i semestr\p c++\zadania z labów\projekt zaliczeniowy\matrix\include\squarematrix.hpp
+	"headers.hpp"
+	"Matrix.hpp"
+	"Complex.hpp"
+
+1546016602 source:d:\maciej dudek\documents\studia\rok ii\i semestr\p c++\zadania z labów\projekt zaliczeniowy\matrix\src\matrix.cpp
+
+1546690753 d:\maciej dudek\documents\studia\rok ii\i semestr\p c++\zadania z labów\projekt zaliczeniowy\matrix\include\rational.hpp
+	"headers.hpp"
+
+1546690729 d:\maciej dudek\documents\studia\rok ii\i semestr\p c++\zadania z labów\projekt zaliczeniowy\matrix\include\complex.hpp
+	"headers.hpp"
+	"Rational.hpp"
+
+1546690633 d:\maciej dudek\documents\studia\rok ii\i semestr\p c++\zadania z labów\projekt zaliczeniowy\matrix\include\zp.hpp
+	"headers.hpp"
+
+1546690729 source:d:\maciej dudek\documents\studia\rok ii\i semestr\p c++\zadania z labów\projekt zaliczeniowy\matrix\src\complex.cpp
+	"Complex.hpp"
+	"Rational.hpp"
+
+1546690781 source:d:\maciej dudek\documents\studia\rok ii\i semestr\p c++\zadania z labów\projekt zaliczeniowy\matrix\src\rational.cpp
+	"Rational.hpp"
+
+1546016756 source:d:\maciej dudek\documents\studia\rok ii\i semestr\p c++\zadania z labów\projekt zaliczeniowy\matrix\src\zp.cpp
+
+1546011500 d:\maciej dudek\documents\studia\rok ii\i semestr\p c++\zadania z labów\projekt zaliczeniowy\matrix\src\matrix.cpp
+	"Matrix.hpp"
+
