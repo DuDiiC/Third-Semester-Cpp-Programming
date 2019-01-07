@@ -187,7 +187,7 @@ public:
     }
 
     T determinant() {
-        T determinantValue = 1;
+        T determinantValue(1);
 
         for(int i = 0; i < this->C-1; i++) {
 
