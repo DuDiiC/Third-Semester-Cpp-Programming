@@ -51,6 +51,7 @@ public:
 
     // overloading == operator
     bool operator==(const Matrix<T, R, C>&);
+    bool operator!=(const Matrix<T, R, C>&);
 
     // overloading operators << and >>
     template < class MATRIX > // why it works ???
@@ -227,6 +228,11 @@ bool Matrix<T, R, C>::operator==(const Matrix<T, R, C> &M) {
         }
     }
     return equality;
+}
+
+template <typename T, unsigned int R, unsigned int C>
+bool Matrix<T, R, C>::operator!=(const Matrix<T, R, C> &M) {
+    return !((*this) == M);
 }
 
 template <typename T, unsigned int R, unsigned int C>

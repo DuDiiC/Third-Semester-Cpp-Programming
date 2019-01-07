@@ -39,6 +39,7 @@ public:
 
     // overloading relational operators
     friend bool operator==(const Rational &r1, const Rational &r2);
+    friend bool operator!=(const Rational &r1, const Rational &r2);
     friend bool operator<(const Rational &r1, const Rational &r2);
     friend bool operator>(const Rational &r1, const Rational &r2);
     friend bool operator<=(const Rational &r1, const Rational &r2);

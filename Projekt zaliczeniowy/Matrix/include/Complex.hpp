@@ -39,6 +39,7 @@ public:
 
     // overloading equals operator
     friend bool operator==(const Complex&, const Complex&);
+    friend bool operator!=(const Complex&, const Complex&);
 
     // overloading operators << and >>
     friend ostream& operator<<(ostream &output, const Complex &c);

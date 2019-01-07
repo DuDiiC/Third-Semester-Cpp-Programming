@@ -143,6 +143,10 @@ bool operator==(const Complex &c1, const Complex &c2) {
     return ((c1.realPart == c2.realPart) && (c1.imaginaryPart == c2.imaginaryPart));
 }
 
+bool operator!=(const Complex &c1, const Complex &c2) {
+    return !(c1==c2);
+}
+
 ostream& operator<<(ostream &output, const Complex &c) {
 
     Rational digitOne(1), minusOneDigit(-1);

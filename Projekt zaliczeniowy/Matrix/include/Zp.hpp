@@ -27,6 +27,7 @@ public:
     Z<p>& operator/=(const Z<p>&);
 
     bool operator==(const Z<p>&) const;
+    bool operator!=(const Z<p>&) const;
     bool operator<=(const Z<p>&) const;
     bool operator<(const Z<p>&) const;
     bool operator>=(const Z<p>&) const;
@@ -106,6 +107,11 @@ Z<p>& Z<p>::operator/=(const Z<p> &a) {
 template <unsigned int p>
 bool Z<p>::operator==(const Z<p> &a) const {
     return (this->x == a.x);
+}
+
+template <unsigned int p>
+bool Z<p>::operator!=(const Z<p> &a) const {
+    return !((*this)==a);
 }
 
 template <unsigned int p>
