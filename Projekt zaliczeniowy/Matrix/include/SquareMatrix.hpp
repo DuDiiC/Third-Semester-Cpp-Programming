@@ -14,24 +14,34 @@ class SquareMatrix : public Matrix <T, N, N> {
 public:
 
     T determinant(); // dziala int, Rational, Zp
+    // constructors
+    SquareMatrix();
+    SquareMatrix(Matrix<T, N, N>);
 
 private:
     void onlyPositive(int, T&);
     void giveMax(int&, int&, int);
 };
 
-/*
-template <unsigned int N>
-class SquareMatrix : public Matrix<Compex, N, N> {
-public:
-    Compex determinant();
-};
-
-template <unsigned int N>
-Complex SquareMatrix<Complex, N>::determinant() {
-    return Complex(1);
+template <typename T, unsigned int N>
+SquareMatrix<T, N>::SquareMatrix() {
+    for(int i = 0; i < N; i++) {
+        vector < T > row;
+        this->matrix.push_back(row);
+    }
 }
-*/
+
+template <typename T, unsigned int N>
+SquareMatrix<T, N>::SquareMatrix(Matrix<T, N, N> m) {
+    for(int i = 0; i < N; i++) {
+        vector < T > row;
+        for(int j = 0; j < N; j++) {
+            row.push_back(m.matrix[i][j]);
+        }
+        this->matrix.push_back(row);
+    }
+}
+
 template <typename T, unsigned int N>
 T SquareMatrix<T, N>::determinant() {
 
