@@ -21,10 +21,13 @@ public:
     void swapCol(unsigned int, unsigned int);
     Matrix<T,C,R> transpose();
     void addRowXToY(unsigned int, unsigned int);
+    void addRowXToY(unsigned int, unsigned int, T);
     void addColXToY(unsigned int, unsigned int);
+    void addColXToY(unsigned int, unsigned int, T);
     void multiplyRowXByY(unsigned int, T);
     void multiplyColXByY(unsigned int, T);
     void subtractRowXFromY(unsigned int, unsigned int);
+    void subtractColXFromY(unsigned int, unsigned int);
 
     // overloading arithmetic operators
     Matrix<T, R, C> operator+(const Matrix<T, R, C>&) const;
@@ -115,6 +118,13 @@ void Matrix<T, R, C>::addRowXToY(unsigned int x, unsigned int y) {
 }
 
 template <typename T, unsigned int R, unsigned int C>
+void Matrix<T, R, C>::addRowXToY(unsigned int x, unsigned int y, T temp) {
+    for(int i = 0; i < C; i++) {
+        this->matrix[y-1][i] += temp*this->matrix[x-1][i];
+    }
+}
+
+template <typename T, unsigned int R, unsigned int C>
 void Matrix<T, R, C>::addColXToY(unsigned int x, unsigned int y) {
     for(int i = 0; i < R; i++) {
         this->matrix[i][y-1] += this->matrix[i][x-1];
@@ -122,9 +132,23 @@ void Matrix<T, R, C>::addColXToY(unsigned int x, unsigned int y) {
 }
 
 template <typename T, unsigned int R, unsigned int C>
+void Matrix<T, R, C>::addColXToY(unsigned int x, unsigned int y, T temp) {
+    for(int i = 0; i < R; i++) {
+        this->matrix[i][y-1] += temp*this->matrix[i][x-1];
+    }
+}
+
+template <typename T, unsigned int R, unsigned int C>
 void Matrix<T, R, C>::subtractRowXFromY(unsigned int x, unsigned int y) {
     for(int i = 0; i < R; i++) {
         this->matrix[y-1][i] -= this->matrix[x-1][i];
+    }
+}
+
+template <typename T, unsigned int R, unsigned int C>
+void Matrix<T, R, C>::subtractColXFromY(unsigned int x, unsigned int y) {
+    for(int i = 0; i < C; i++) {
+        this->matrix[i][y-1] -= this->matrix[i][x-1];
     }
 }
 
