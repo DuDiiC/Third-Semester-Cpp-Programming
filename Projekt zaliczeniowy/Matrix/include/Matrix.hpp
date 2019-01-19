@@ -31,9 +31,12 @@ public:
 
     // overloading arithmetic operators
     Matrix<T, R, C> operator+(const Matrix<T, R, C>&) const;
+    Matrix<T, R, C> operator+(const T&) const;
     Matrix<T, R, C>& operator+=(const Matrix<T, R, C>&);
     Matrix<T, R, C> operator-(const Matrix<T, R, C>&) const;
+    Matrix<T, R, C> operator-(const T&) const;
     Matrix<T, R, C>& operator-=(const Matrix<T, R, C>&);
+    Matrix<T, R, C> operator*(const T&) const;
 
     template <unsigned int D>
     friend Matrix<T, R, D> operator*(const Matrix<T, R, C> &M1, const Matrix<T, C, D> &M2) { // WHY HAVE TO BE IN CLASS ??
@@ -181,6 +184,20 @@ Matrix<T, R, C> Matrix<T, R, C>::operator+(const Matrix<T, R, C> &M) const {
 }
 
 template <typename T, unsigned int R, unsigned int C>
+Matrix<T, R, C> Matrix<T, R, C>::operator+(const T &temp) const {
+
+    Matrix<T, R, C> newMatrix;
+
+    for(int i = 0; i < R; i++) {
+        for(int j = 0; j < C; j++) {
+            newMatrix.matrix[i].push_back(this->matrix[i][j]+temp);
+        }
+    }
+
+    return newMatrix;
+}
+
+template <typename T, unsigned int R, unsigned int C>
 Matrix<T, R, C>& Matrix<T, R, C>::operator+=(const Matrix<T, R, C> &M) {
     *this = (*this)+M;
     return *this;
@@ -201,9 +218,37 @@ Matrix<T, R, C> Matrix<T, R, C>::operator-(const Matrix<T, R, C> &M) const {
 }
 
 template <typename T, unsigned int R, unsigned int C>
+Matrix<T, R, C> Matrix<T, R, C>::operator-(const T &temp) const {
+
+    Matrix<T, R, C> newMatrix;
+
+    for(int i = 0; i < R; i++) {
+        for(int j = 0; j < C; j++) {
+            newMatrix.matrix[i].push_back(this->matrix[i][j]-temp);
+        }
+    }
+
+    return newMatrix;
+}
+
+template <typename T, unsigned int R, unsigned int C>
 Matrix<T, R, C>& Matrix<T, R, C>::operator-=(const Matrix<T, R, C> &M) {
     *this = (*this)-M;
     return *this;
+}
+
+template <typename T, unsigned int R, unsigned int C>
+Matrix<T, R, C> Matrix<T, R, C>::operator*(const T &temp) const {
+
+    Matrix<T, R, C> newMatrix;
+
+    for(int i = 0; i < R; i++) {
+        for(int j = 0; j < C; j++) {
+            newMatrix.matrix[i].push_back(this->matrix[i][j]*temp);
+        }
+    }
+
+    return newMatrix;
 }
 
 /*
