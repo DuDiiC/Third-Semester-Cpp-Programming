@@ -13,11 +13,12 @@ class SquareMatrix : public Matrix <T, N, N> {
 
 public:
 
-    T determinant(); // dziala int, Rational, Zp
     // constructors
     SquareMatrix();
     SquareMatrix(Matrix<T, N, N>);
 
+    // operations
+    T determinant();
 private:
     void onlyPositive(int, T&);
     void giveMax(int&, int&, int);
@@ -45,6 +46,20 @@ SquareMatrix<T, N>::SquareMatrix(Matrix<T, N, N> m) {
 template <typename T, unsigned int N>
 T SquareMatrix<T, N>::determinant() {
 
+    if(N == 2) {
+        return (this->matrix[0][0]*this->matrix[1][1]) - (this->matrix[1][0]*this->matrix[0][1]);
+    } else if(N == 3) {
+        T determinantValue(0);
+        for(int i = 0; i < 3; i++) {
+            determinantValue += this->matrix[i%3][0]*this->matrix[(i+1)%3][1]*this->matrix[(i+2)%3][2];
+        }
+        for(int i = 0; i < 3; i++) {
+            determinantValue -= this->matrix[i%3][2]*this->matrix[(i+1)%3][1]*this->matrix[(i+2)%3][0];
+        }
+        return determinantValue;
+    }
+
+    SquareMatrix<T, N> newMatrix = *this;
     T determinantValue(1);
 
     for(int i = 0; i < N-1; i++) {
@@ -52,25 +67,25 @@ T SquareMatrix<T, N>::determinant() {
         this->onlyPositive(i, determinantValue);
 
         int max1, max2;
-        this->giveMax(max1, max2, i);
+        newMatrix.giveMax(max1, max2, i);
 
-        if(this->matrix[max1][i] == 0 && this->matrix[max2][i] == 0)
-            return 0;
+        if(newMatrix.matrix[max1][i] == T(0) && newMatrix.matrix[max2][i] == T(0))
+            return T(0);
 
-        while(this->matrix[max2][i] != 0) {
-            this->subtractRowXFromY(max2+1, max1+1);
-            this->giveMax(max1, max2, i);
+        while(newMatrix.matrix[max2][i] != T(0)) {
+            newMatrix.subtractRowXFromY(max2+1, max1+1);
+            newMatrix.giveMax(max1, max2, i);
         }
 
         // przesunac max1 na gore // ?
         if(max1 != i) {
-            this->swapRow(i+1, max1+1);
-            determinantValue *= -1;
+            newMatrix.swapRow(i+1, max1+1);
+            determinantValue *= T(-1);
         }
     }
 
     for(int i = 0; i < N; i++) {
-        determinantValue *= this->matrix[i][i];
+        determinantValue *= newMatrix.matrix[i][i];
     }
 
     return determinantValue;
@@ -79,9 +94,9 @@ T SquareMatrix<T, N>::determinant() {
 template <typename T, unsigned int N>
 void SquareMatrix<T, N>::onlyPositive(int column, T &det) {
     for(int i = 0; i < N; i++) {
-        if(this->matrix[i][column] < 0) {
+        if(this->matrix[i][column] < T(0)) {
             this->multiplyRowXByY(i+1, -1);
-            det *= -1;
+            det *= T(-1);
         }
     }
 }
