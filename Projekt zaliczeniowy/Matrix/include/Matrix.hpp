@@ -49,7 +49,7 @@ public:
         return newMatrix;
     }
 
-    // overloading == operator
+    // overloading equals operator
     bool operator==(const Matrix<T, R, C>&);
     bool operator!=(const Matrix<T, R, C>&);
 

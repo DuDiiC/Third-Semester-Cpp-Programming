@@ -10,7 +10,8 @@
 class Rational {
 
 public:
-    // constructor
+
+    // constructors
     Rational();
     Rational(long long, long long = 1);
     Rational(string);

@@ -11,12 +11,13 @@
 class Complex {
 
 public:
+
     // constructors
     Complex();
     Complex(Rational, Rational = 0);
     Complex(const Complex&);
 
-    // getters / czemu nie dziala inline ???
+    // getters
     Rational getRealPart() const ;
     Rational getImaginaryPart() const;
 

@@ -10,13 +10,18 @@ template <unsigned int p>
 class Z {
 
 public:
+
+    // constructors
     Z<p>();
     Z<p>(unsigned int);
 
+    // getter
     int getX() const;
 
+    // setter
     void setX(int);
 
+    // overloading arithmetic operators
     Z<p> operator+(const Z<p>&) const;
     Z<p>& operator+=(const Z<p>&);
     Z<p> operator-(const Z<p>&) const;
@@ -26,6 +31,7 @@ public:
     Z<p> operator/(const Z<p>&) const;
     Z<p>& operator/=(const Z<p>&);
 
+    // overloading relational operators
     bool operator==(const Z<p>&) const;
     bool operator!=(const Z<p>&) const;
     bool operator<=(const Z<p>&) const;
@@ -35,6 +41,7 @@ public:
 
     Z<p> inverseElement();
 
+    // overloading operators << and >>
     template <class Zp>
     friend ostream& operator<<(ostream &output, const Z<p>&);
     template <class Zp>
