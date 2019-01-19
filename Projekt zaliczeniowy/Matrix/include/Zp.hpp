@@ -39,7 +39,7 @@ public:
     bool operator>=(const Z<p>&) const;
     bool operator>(const Z<p>&) const;
 
-    Z<p> inverseElement();
+    Z<p> inverseElement() const;
 
     // overloading operators << and >>
     template <class Zp>
@@ -101,8 +101,8 @@ Z<p>& Z<p>::operator*=(const Z<p> &a) {
 
 template <unsigned int p>
 Z<p> Z<p>::operator/(const Z<p> &a) const {
-    a = a.inverseElement();
-    return Z(this->x*a.x);
+    Z<p> b = a.inverseElement();
+    return Z(this->x*b.x);
 }
 
 template <unsigned int p>
@@ -142,7 +142,7 @@ bool Z<p>::operator>(const Z<p> &a) const {
 }
 
 template <unsigned int p>
-Z<p> Z<p>::inverseElement() { //extended Euclid's algorithm
+Z<p> Z<p>::inverseElement() const { //extended Euclid's algorithm
 
     int temp[5] = {1, x, 0, p, 0};
         while (temp[1]) {
