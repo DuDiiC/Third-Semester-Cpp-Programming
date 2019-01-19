@@ -19,6 +19,7 @@ public:
 
     // operations
     T determinant();
+    SquareMatrix<T, N> algebraicComplement(); // dopelnienie algebraiczne
 private:
     void onlyPositive(int, T&);
     void giveMax(int&, int&, int);
@@ -91,6 +92,38 @@ T SquareMatrix<T, N>::determinant() {
     return determinantValue;
 }
 
+
+template <typename T, unsigned int N>
+SquareMatrix<T, N> SquareMatrix<T, N>::algebraicComplement() {
+
+    SquareMatrix<T, N> newMatrix;
+    T minusOne(-1);
+
+    for(int i = 0; i < N; i++) {
+        for(int j = 0; j < N; j++) {
+            SquareMatrix<T, N-1> newSmallMatrix;
+            int temp = 0;
+            for(int k = 0; k < N; k++) {
+                if(k != i) {
+                    for(int m = 0; m < N; m++) {
+                        if(m != j) {
+                            newSmallMatrix.matrix[temp].push_back(this->matrix[k][m]);
+                        }
+                    }
+                    temp++;
+                }
+            }
+
+            if((i+j)%2) {
+                newMatrix.matrix[i].push_back(minusOne*newSmallMatrix.determinant());
+            } else {
+                newMatrix.matrix[i].push_back(newSmallMatrix.determinant());
+            }
+        }
+    }
+
+    return newMatrix;
+}
 template <typename T, unsigned int N>
 void SquareMatrix<T, N>::onlyPositive(int column, T &det) {
     for(int i = 0; i < N; i++) {
