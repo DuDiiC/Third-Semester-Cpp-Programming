@@ -19,8 +19,6 @@ public:
     // operations
     void swapRow(unsigned int, unsigned int);
     void swapCol(unsigned int, unsigned int);
-    void inc();
-    void dec();
     Matrix<T,C,R> transpose();
     void addRowXToY(unsigned int, unsigned int);
     void addColXToY(unsigned int, unsigned int);
@@ -88,24 +86,6 @@ template <typename T, unsigned int R, unsigned int C>
 void Matrix<T, R, C>::swapCol(int unsigned firstCol, unsigned int secondCol) {
     for(int i = 0; i < this->matrix.size(); i++) {
         swap(this->matrix[i][firstCol-1], this->matrix[i][secondCol-1]);
-    }
-}
-
-template <typename T, unsigned int R, unsigned int C>
-void Matrix<T, R, C>::inc() {
-    for(int i = 0; i < R; i++) {
-        for(int j = 0; j < C; j++) {
-            this->matrix[i][j] += 1; // ADD FOR OTHERS CLASSES
-        }
-    }
-}
-
-template <typename T, unsigned int R, unsigned int C>
-void Matrix<T, R, C>::dec() {
-    for(int i = 0; i < R; i++) {
-        for(int j = 0; j < C; j++) {
-            matrix[i][j] -= 1; // ADD FOR OTHERS CLASSES
-        }
     }
 }
 
