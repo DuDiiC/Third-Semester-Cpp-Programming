@@ -93,13 +93,13 @@ int main() {
         switch(mClass) {
 
         case 1: {
-            SquareMatrix<int, 4> smInt;
-            cout << "Wczytaj macierz 4x4 typu int: " << endl;
+            SquareMatrix<int, 3> smInt;
+            cout << "Wczytaj macierz 3x3 typu int: " << endl;
             cin >> smInt;
             while(mOperation) {
                 menuForMatrix(smInt);
-                cout << "16. Oblicz wyznacznik" << endl;
-                cout << "17. Wyznacz macierz odwrotna." << endl;
+                cout << "17. Oblicz wyznacznik" << endl;
+                cout << "18. Wyznacz macierz odwrotna." << endl;
                 cout << "Twoj wybor: ";
                 cin >> mOperation;
                 choiceOperationForSquareMatrix(mOperation, smInt);
@@ -108,13 +108,13 @@ int main() {
         }
 
         case 2: {
-            SquareMatrix<double, 4> smDouble;
-            cout << "Wczytaj macierz 4x4 typu double: " << endl;
+            SquareMatrix<double, 3> smDouble;
+            cout << "Wczytaj macierz 3x3 typu double: " << endl;
             cin >> smDouble;
             while(mOperation) {
                 menuForMatrix(smDouble);
-                cout << "16. Oblicz wyznacznik" << endl;
-                cout << "17. Wyznacz macierz odwrotna." << endl;
+                cout << "17. Oblicz wyznacznik" << endl;
+                cout << "18. Wyznacz macierz odwrotna." << endl;
                 cout << "Twoj wybor: ";
                 cin >> mOperation;
                 choiceOperationForSquareMatrix(mOperation, smDouble);
@@ -123,13 +123,13 @@ int main() {
         }
 
         case 3: {
-            SquareMatrix<Z<4>, 4> smZ4;
-            cout << "Wczytaj macierz 4x4 typu Z<4>: " << endl;
+            SquareMatrix<Z<4>, 3> smZ4;
+            cout << "Wczytaj macierz 3x3 typu Z<4>: " << endl;
             cin >> smZ4;
             while(mOperation) {
                 menuForMatrix(smZ4);
-                cout << "16. Oblicz wyznacznik" << endl;
-                cout << "17. Wyznacz macierz odwrotna." << endl;
+                cout << "17. Oblicz wyznacznik" << endl;
+                cout << "18. Wyznacz macierz odwrotna." << endl;
                 cout << "Twoj wybor: ";
                 cin >> mOperation;
                 choiceOperationForSquareMatrix(mOperation, smZ4);
@@ -139,12 +139,12 @@ int main() {
 
         case 4: {
             SquareMatrix<Rational, 3> smRational;
-            cout << "Wczytaj macierz 4x4 typu Rational: " << endl;
+            cout << "Wczytaj macierz 3x3 typu Rational: " << endl;
             cin >> smRational;
             while(mOperation) {
                 menuForMatrix(smRational);
-                cout << "16. Oblicz wyznacznik" << endl;
-                 cout << "17. Wyznacz macierz odwrotna." << endl;
+                cout << "17. Oblicz wyznacznik" << endl;
+                 cout << "18. Wyznacz macierz odwrotna." << endl;
                 cout << "Twoj wybor: ";
                 cin >> mOperation;
                 choiceOperationForSquareMatrix(mOperation, smRational);
@@ -153,17 +153,16 @@ int main() {
         }
 
         case 5: {
-            SquareMatrix<Complex, 4> smComplex;
-            cout << "Wczytaj macierz 4x4 typu Complex: " << endl;
+            SquareMatrix<Complex, 3> smComplex;
+            cout << "Wczytaj macierz 3x3 typu Complex: " << endl;
             cin >> smComplex;
             while(mOperation) {
                 menuForMatrix(smComplex);
-                /**cout << "16. Oblicz wyznacznik." << endl;
-                cout << "17. Wyznacz macierz odwrotna." << endl;*/
+                cout << "17. Oblicz wyznacznik." << endl;
+                cout << "18. Wyznacz macierz odwrotna." << endl;
                 cout << "Twoj wybor: ";
                 cin >> mOperation;
-                ///choiceOperationForSquareMatrix(mOperation, smComplex);
-                choiceOperationForMatrix(mOperation, smComplex);
+                choiceOperationForSquareMatrix(mOperation, smComplex);
             }
             break;
         }
@@ -181,7 +180,7 @@ void introdutionMenu(int &matrixType, int &matrixClass) {
 
     cout << "Wybierz na jakiej macierzy chcesz pracowac:" << endl;
     cout << "1. Macierz prostokatna o wymiarze 3x4." << endl;
-    cout << "2. Macierz kwadratowa o wymiarze 4x4." << endl;
+    cout << "2. Macierz kwadratowa o wymiarze 3x3." << endl;
     cout << "3. Opusc program." << endl;
     cout << "Twoj wybor: ";
     cin >> matrixType;
@@ -224,6 +223,7 @@ void menuForMatrix(Matrix<T, R, C> m) {
     cout << "13. Odejmij liczbe od kazdej komorki macierzy." << endl;
     cout << "14. Mnozenie macierzy. " << endl;
     cout << "15. Porownanie ze soba dwoch macierzy." << endl;
+    cout << "16. Wyznacz macierz gorno-schodkowa." << endl;
 }
 
 template <typename T, unsigned int R, unsigned int C>
@@ -350,6 +350,9 @@ void choiceOperationForMatrix(int option, Matrix<T, R, C> &m) {
         } else {
             cout << "Sa to dwie inne macierze." << endl;
         }
+    } else if(option == 16) {
+        cout << "Macierz gorno-schodkowa:" << endl;
+        cout << m.upperStepped() << endl;
     }
 }
 
@@ -478,10 +481,12 @@ void choiceOperationForSquareMatrix(int option, SquareMatrix<T, N> &sm) {
             cout << "Sa to dwie inne macierze." << endl;
         }
     } else if(option == 16) {
+        cout << "Macierz gorno-schodkowa:" << endl;
+        cout << sm.upperStepped() << endl;
+    } else if(option == 17) {
         cout << "Wyznacznik macierzy wynosi: " << sm.determinant() << endl;
-    } else if(option == 17) { /// POPRAWIC
+    } else if(option == 18) { /// POPRAWIC
         cout << "Macierz odwrotna do podanej: " << endl;
-        ///cout << sm.inverseMatrix() << endl; DOPISAC IMPLEMENTACJE !!!
         if(sm.determinant() == T(0)) {
             cout << "Nie mozna wyznaczyc macierzy odwrotnej do macierzy, ktorej wyznacznik jest rowny 0." << endl;
         } else {
