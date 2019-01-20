@@ -20,6 +20,8 @@ public:
     // operations
     T determinant();
     SquareMatrix<T, N> algebraicComplement(); // dopelnienie algebraiczne
+    SquareMatrix<T, N> inverseMatrix(); // macierz odwrotna
+
 private:
     void onlyPositive(int, T&);
     void giveMax(int&, int&, int);
@@ -124,11 +126,21 @@ SquareMatrix<T, N> SquareMatrix<T, N>::algebraicComplement() {
 
     return newMatrix;
 }
+
+template <typename T, unsigned int N>
+SquareMatrix<T, N> SquareMatrix<T, N>::inverseMatrix() {
+    SquareMatrix<T, N> newMatrix = *(this);
+    newMatrix = newMatrix.algebraicComplement();
+    newMatrix = newMatrix.transpose();
+    newMatrix = newMatrix * (T(1)/this->determinant());
+    return newMatrix;
+}
+
 template <typename T, unsigned int N>
 void SquareMatrix<T, N>::onlyPositive(int column, T &det) {
     for(int i = 0; i < N; i++) {
         if(this->matrix[i][column] < T(0)) {
-            this->multiplyRowXByY(i+1, -1);
+            this->multiplyRowXByY(i+1, T(-1));
             det *= T(-1);
         }
     }
