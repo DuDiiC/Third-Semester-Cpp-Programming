@@ -29,6 +29,7 @@ public:
     void subtractRowXFromY(unsigned int, unsigned int);
     void subtractColXFromY(unsigned int, unsigned int);
     Matrix<T,R,C> upperStepped();
+    Matrix<T,R,C> upperStepped(T&);
 
     // overloading arithmetic operators
     Matrix<T, R, C> operator+(const Matrix<T, R, C>&) const;
@@ -191,6 +192,43 @@ Matrix<T, R, C> Matrix<T, R, C>::upperStepped() {
 
     return newMatrix;
 }
+
+template <typename T, unsigned int R, unsigned int C>
+Matrix<T, R, C> Matrix<T, R, C>::upperStepped(T &det) {
+
+    Matrix<T, R, C> newMatrix = *this;
+    T one(1), minusOne(-1), zero(0);
+
+    int j = 0;
+    for(int i = 0; i < R; i++) {
+        int k = i;
+        while(k < R && j < C && newMatrix.matrix[k][j] == zero) {
+            k++;
+            if(k == R) {
+                k = i;
+                j++;
+            }
+        }
+        if(j != C) {
+            if(k != i) {
+                det *= minusOne;
+                newMatrix.swapRow(i+1, k+1);
+            }
+            if(newMatrix.matrix[i][j] != one) {
+                det *= newMatrix.matrix[i][j];
+                newMatrix.multiplyRowXByY(i+1, one/(newMatrix.matrix[i][j]));
+            }
+            for(k = i+1; k < R; k++) {
+                newMatrix.addRowXToY(i+1, k+1, newMatrix.matrix[k][j]*minusOne);
+            }
+        } else {
+            i = R;
+        }
+        j++;
+    }
+    return newMatrix;
+}
+
 
 template <typename T, unsigned int R, unsigned int C>
 Matrix<T, R, C> Matrix<T, R, C>::operator+(const Matrix<T, R, C> &M) const {
