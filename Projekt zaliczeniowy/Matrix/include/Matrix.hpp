@@ -37,31 +37,18 @@ public:
     Matrix<T, R, C> operator-(const Matrix<T, R, C>&) const;
     Matrix<T, R, C> operator-(const T&) const;
     Matrix<T, R, C>& operator-=(const Matrix<T, R, C>&);
-    Matrix<T, R, C> operator*(const T&) const;
-
     template <unsigned int D>
-    friend Matrix<T, R, D> operator*(const Matrix<T, R, C> &M1, const Matrix<T, C, D> &M2) { // WHY HAVE TO BE IN CLASS ??
-        Matrix<T, R, D> newMatrix;
-        for(int i = 0; i < R; i++) {
-            for(int j = 0; j < D; j++) {
-                T temp(0);
-                for(int k = 0; k < C; k++) {
-                    temp = temp+(M1.matrix[i][k]*M2.matrix[k][j]);
-                }
-                newMatrix.matrix[i].push_back(temp);
-            }
-        }
-        return newMatrix;
-    }
+    Matrix<T, R, D> operator*(const Matrix<T, C, D>&);
+    Matrix<T, R, C> operator*(const T&) const;
 
     // overloading equals operator
     bool operator==(const Matrix<T, R, C>&);
     bool operator!=(const Matrix<T, R, C>&);
 
     // overloading operators << and >>
-    template < class MATRIX > // why it works ???
+    template < class MATRIX >
     friend ostream& operator<<(ostream&, const Matrix<T, R, C>&);
-    template < class MATRIX > // ???
+    template < class MATRIX >
     friend istream& operator>>(istream&, Matrix<T, R, C>&);
 };
 
@@ -195,7 +182,6 @@ Matrix<T, R, C> Matrix<T, R, C>::upperStepped() {
             }
             for(k = i+1; k < R; k++) {
                 newMatrix.addRowXToY(i+1, k+1, newMatrix.matrix[k][j]*minusOne);
-                cout << newMatrix << endl;
             }
         } else {
             i = R;
@@ -275,6 +261,22 @@ Matrix<T, R, C>& Matrix<T, R, C>::operator-=(const Matrix<T, R, C> &M) {
 }
 
 template <typename T, unsigned int R, unsigned int C>
+template <unsigned int D>
+Matrix<T, R, D> Matrix<T, R, C>::operator*(const Matrix<T, C, D> &M) {
+    Matrix<T, R, D> newMatrix;
+    for(int i = 0; i < R; i++) {
+        for(int j = 0; j < D; j++) {
+            T temp(0);
+            for(int k = 0; k < C; k++) {
+                temp = temp+(this->matrix[i][k]*M.matrix[k][j]);
+            }
+            newMatrix.matrix[i].push_back(temp);
+        }
+    }
+    return newMatrix;
+}
+
+template <typename T, unsigned int R, unsigned int C>
 Matrix<T, R, C> Matrix<T, R, C>::operator*(const T &temp) const {
 
     Matrix<T, R, C> newMatrix;
@@ -287,23 +289,6 @@ Matrix<T, R, C> Matrix<T, R, C>::operator*(const T &temp) const {
 
     return newMatrix;
 }
-
-/*
-template <typename T, unsigned int R, unsigned int C, unsigned int D>
-Matrix<T, R, D> operator*(const Matrix<T, R, C> &M1, const Matrix<T, C, D> &M2) {
-    Matrix<T, R, D> newMatrix;
-    for(int i = 0; i < R; i++) {
-        for(int j = 0; j < D; j++) {
-            T temp = 0; // ???
-            for(int k = 0; k < C; k++) {
-                temp = temp+(M1.matrix[i][k]*M2.matrix[k][j]);
-            }
-            newMatrix.matrix[i].push_back(temp);
-        }
-    }
-    return newMatrix;
-}
-*/
 
 template <typename T, unsigned int R, unsigned int C>
 bool Matrix<T, R, C>::operator==(const Matrix<T, R, C> &M) {
