@@ -202,7 +202,7 @@ istream& operator>>(istream &input, Rational &r) {
     return input;
 }
 
-/*vector < long long > Rational::createContinuedFraction(Rational r) {
+vector < long long > Rational::createContinuedFraction(Rational r) {
     vector <long long> fracTab;
     Rational frac = Rational(r);
     if(frac.numerator >= frac.denominator) {
@@ -229,7 +229,7 @@ void Rational::printContinuedFraction(vector < long long > fracTab) {
         if(i != fracTab.size()-1) cout << ",";
     }
     cout << "]";
-}*/
+}
 
 
 long long Rational::gcd(long long x, long long y) {

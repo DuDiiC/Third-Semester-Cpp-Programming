@@ -159,7 +159,7 @@ Z<p> Z<p>::inverseElement() const { //extended Euclid's algorithm
 
 template <unsigned int p>
 ostream& operator<<(ostream &output, const Z<p> &s) {
-    output << s.getX(); // WHY WITH GETTER? IT IS FRIEND METHOD
+    output << s.getX();
     return output;
 }
 

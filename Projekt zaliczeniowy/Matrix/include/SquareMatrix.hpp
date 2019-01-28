@@ -80,7 +80,6 @@ T SquareMatrix<T, N>::determinant() {
             newMatrix.giveMax(max1, max2, i);
         }
 
-        // przesunac max1 na gore // ?
         if(max1 != i) {
             newMatrix.swapRow(i+1, max1+1);
             determinantValue *= T(-1);
@@ -93,7 +92,6 @@ T SquareMatrix<T, N>::determinant() {
 
     return determinantValue;
 }
-
 
 template <typename T, unsigned int N>
 SquareMatrix<T, N> SquareMatrix<T, N>::algebraicComplement() {

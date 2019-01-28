@@ -51,8 +51,8 @@ public:
     friend istream& operator>>(istream &input, Rational &r);
 
     // continued fraction
-    //static vector < long long > createContinuedFraction(Rational r);
-    //static void printContinuedFraction(vector < long long > fracTab);
+    static vector < long long > createContinuedFraction(Rational r);
+    static void printContinuedFraction(vector < long long > fracTab);
 
     void saveAsIrreducible();
 
