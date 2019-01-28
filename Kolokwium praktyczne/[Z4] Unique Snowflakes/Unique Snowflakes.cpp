@@ -5,44 +5,44 @@ using namespace std;
 
 int main() {
 
-    int iloscTestow;
-    cin >> iloscTestow;
-    while(iloscTestow--) {
+    int cases;
+    cin >> cases;
+    while(cases--) {
 
-        int maxPudelka = 0;
-        int iloscPlatkow;
-        cin >> iloscPlatkow;
+        int result = 0;
+        int snowflakesNumber;
+        cin >> snowflakesNumber;
 
-        vector < int > platki;
-        for(int i = 0; i < iloscPlatkow; i++) {
+        vector < int > snowflakes;
+        for(int i = 0; i < snowflakesNumber; i++) {
             int temp;
             cin >> temp;
-            platki.push_back(temp);
+            snowflakes.push_back(temp);
         }
 
-        int indexP = 0, indexK = 0;
-        set < int > ciagUnikalnych;
+        int startIndex = 0, endIntex = 0;
+        set < int > uniqueSnowflakes;
 
-        while(indexK < iloscPlatkow) {
+        while(endIntex < snowflakesNumber) {
             /// dopoki sie nie powtarza wrzucaj kolejne
-            while(indexK < iloscPlatkow &&
-                  !ciagUnikalnych.count(platki[indexK])) {
-                ciagUnikalnych.insert(platki[indexK]);
-                indexK++;
+            while(endIntex < snowflakesNumber &&
+                  !uniqueSnowflakes.count(snowflakes[endIntex])) {
+                uniqueSnowflakes.insert(snowflakes[endIntex]);
+                endIntex++;
             }
 
             /// teraz sprawdz czy nie jest dluzszy niz wczesniej
-            if(indexK - indexP > maxPudelka) {
-                maxPudelka = indexK - indexP;
+            if(endIntex - startIndex > result) {
+                result = endIntex - startIndex;
             }
 
             /// usunac ze zbioru unikalnych pierwszy nieunikalny
-            ciagUnikalnych.erase(platki[indexP]);
-            indexP++;
+            uniqueSnowflakes.erase(snowflakes[startIndex]);
+            startIndex++;
 
         }
 
-        cout << maxPudelka << endl;
+        cout << result << endl;
 
     }
 

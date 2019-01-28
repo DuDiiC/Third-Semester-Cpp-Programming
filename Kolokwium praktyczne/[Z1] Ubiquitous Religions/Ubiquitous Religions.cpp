@@ -2,22 +2,19 @@
 #include <vector>
 using namespace std;
 
-int prawdziwaReligia(int x, vector < int > &v) {
-
-    /// jesli religia nie zgadza sie z indeksem, to byla juz wczesniej zmieniana, wiec trzeba szukac dalej
+int trueReligion(int x, vector < int > &v) {
     if(x != v[x]) {
-        v[x] = prawdziwaReligia(v[x], v);
+        v[x] = trueReligion(v[x], v);
         return v[x];
     } else {
         return x;
     }
-
 }
 
-bool taSamaReligia(int &x, int &y, vector < int > &v) {
+bool theSameReligion(int &x, int &y, vector < int > &v) {
 
-    x = prawdziwaReligia(x, v);
-    y = prawdziwaReligia(y, v);
+    x = trueReligion(x, v);
+    y = trueReligion(y, v);
 
     if(x != y) {
         v[x] = y;
@@ -27,28 +24,28 @@ bool taSamaReligia(int &x, int &y, vector < int > &v) {
 
 int main() {
 
-    int liczbaStudentow, liczbaPar;
-    int numerTestu = 1;
-    while(cin >> liczbaStudentow >> liczbaPar && (liczbaStudentow || liczbaPar)) {
+    int studentNumber, pairNumber;
+    int testNumber = 1;
+    while(cin >> studentNumber >> pairNumber && (studentNumber || pairNumber)) {
 
-        int liczbaReligii = liczbaStudentow;
-        /// kazdy student ma religie o swoim numerze ( zaczynam od 1 )
-        vector < int > religie;
-        for(int i = 0; i <= liczbaStudentow; i++) {
-            religie.push_back(i);
+        int numberOfReligions = studentNumber;
+        /// every student have a religion - studentNumber and religionNumber are the same (start from 1)
+        vector < int > religions;
+        for(int i = 0; i <= studentNumber; i++) {
+            religions.push_back(i);
         }
 
-        for(int i = 0; i < liczbaPar; i++) {
+        for(int i = 0; i < pairNumber; i++) {
             int temp1, temp2;
             cin >> temp1 >> temp2;
 
-            /// jak jeszcze niezapisane jako ta sama religia to zmieniam
-            if(!taSamaReligia(temp1, temp2, religie)) {
-                liczbaReligii--;
+            /// change, if religions are different
+            if(!theSameReligion(temp1, temp2, religions)) {
+                numberOfReligions--;
             }
         }
 
-        cout << "Case " << numerTestu++ << ": " << liczbaReligii << endl;
+        cout << "Case " << testNumber++ << ": " << numberOfReligions << endl;
     }
 
     return 0;

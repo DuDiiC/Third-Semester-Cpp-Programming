@@ -1,30 +1,30 @@
 #include <iostream>
 using namespace std;
 
-char klawiszeTab[10][5] = {" ", ".,?\"", "abc", "def", "ghi",
+char keys[10][5] = {" ", ".,?\"", "abc", "def", "ghi",
                         "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
 int main() {
 
-    int liczbaTestow;
-    cin >> liczbaTestow;
+    int cases;
+    cin >> cases;
 
-    while(liczbaTestow--) {
-        int liczbaZnakow;
-        cin >> liczbaZnakow;
+    while(cases--) {
+        int charNumber;
+        cin >> charNumber;
 
-        int numerKlawisza[liczbaZnakow];
-        for(int i = 0; i < liczbaZnakow; i++) {
-            cin >> numerKlawisza[i];
+        int keyNumber[charNumber];
+        for(int i = 0; i < charNumber; i++) {
+            cin >> keyNumber[i];
         }
 
-        int literaNaKlawiszu[liczbaZnakow];
-        for(int i = 0; i < liczbaZnakow; i++) {
-            cin >> literaNaKlawiszu[i];
+        int letterOnKey[charNumber];
+        for(int i = 0; i < charNumber; i++) {
+            cin >> letterOnKey[i];
         }
 
-        for(int i = 0; i < liczbaZnakow; i++) {
-            cout << klawiszeTab[numerKlawisza[i]][literaNaKlawiszu[i]-1];
+        for(int i = 0; i < charNumber; i++) {
+            cout << keys[keyNumber[i]][letterOnKey[i]-1];
         }
         cout << endl;
     }

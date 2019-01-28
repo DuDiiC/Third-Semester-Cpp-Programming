@@ -3,22 +3,22 @@ using namespace std;
 
 int main() {
 
-    int poprawna;
-    int ilePoprawnych;
+    int correct;
+    int correctsNumber;
     int temp;
 
-    while(cin >> poprawna) {
+    while(cin >> correct) {
 
-        ilePoprawnych = 0;
+        correctsNumber = 0;
 
         for(int i = 0; i < 5; i++) {
             cin >> temp;
-            if(temp == poprawna) {
-                ilePoprawnych++;
+            if(temp == correct) {
+                correctsNumber++;
             }
         }
 
-        cout << ilePoprawnych << cout;
+        cout << correctsNumber << cout;
 
     }
 

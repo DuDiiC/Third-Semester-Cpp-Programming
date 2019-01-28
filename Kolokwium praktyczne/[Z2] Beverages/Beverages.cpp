@@ -6,44 +6,44 @@ using namespace std;
 
 int main() {
 
-    int iloscTrunkow;
-    int numerTestu = 1;
+    int beveragesNumber;
+    int testNumber = 1;
 
-    while(cin >> iloscTrunkow) {
+    while(cin >> beveragesNumber) {
 
-        /// wczytanie danych do mapy
-        map < int, string > napoje;
-        for(int i = 0; i < iloscTrunkow; i++) {
-            cin >> napoje[i];
+        /// load data into the map
+        map < int, string > beverages;
+        for(int i = 0; i < beveragesNumber; i++) {
+            cin >> beverages[i];
         }
 
-        /// tworze graf
-        vector < vector < int > > graf;
-        for(int i = 0; i < iloscTrunkow; i++) {
+        /// create graph
+        vector < vector < int > > graph;
+        for(int i = 0; i < beveragesNumber; i++) {
             vector < int > temp;
-            graf.push_back(temp);
+            graph.push_back(temp);
         }
 
-        int iloscPar;
-        cin >> iloscPar;
-        for(int i = 0; i < iloscPar; i++) {
-            string napoj1, napoj2;
-            cin >> napoj1 >> napoj2;
+        int pairNumber;
+        cin >> pairNumber;
+        for(int i = 0; i < pairNumber; i++) {
+            string bev1, bev2;
+            cin >> bev1 >> bev2;
 
-            /// tworze graf jako liste sasiadow - dla kazdego wierzcholka mam liste do niego WCHODZACYCH
-            for(int j = 0; j < iloscTrunkow; j++) {
-                if(napoje[j] == napoj2) {
-                    for(int k = 0; k < iloscTrunkow; k++) {
-                        if(napoje[k] == napoj1) {
-                            /// nie wrzucac krawedzi po raz drugi
-                            bool nieMa = true;
-                            for(int m = 0; m < graf[j].size(); m++) {
-                                if(graf[j][m] == k) {
-                                    nieMa = false;
+            /// graph as a adjacency list - for each vertex list of incoming (?) vertexes
+            for(int j = 0; j < beveragesNumber; j++) {
+                if(beverages[j] == bev2) {
+                    for(int k = 0; k < beveragesNumber; k++) {
+                        if(beverages[k] == bev1) {
+                            /// don't add the same twice
+                            bool absent = true;
+                            for(int m = 0; m < graph[j].size(); m++) {
+                                if(graph[j][m] == k) {
+                                    absent = false;
                                     break;
                                 }
                             }
-                            if(nieMa) graf[j].push_back(k);
+                            if(absent) graph[j].push_back(k);
                             break;
                         }
                     }
@@ -52,53 +52,52 @@ int main() {
             }
         }
 
-        /// komunikat
-        cout << "Case #" << numerTestu++ << ": Dilbert should drink beverages in this order:";
+        cout << "Case #" << testNumber++ << ": Dilbert should drink beverages in this order:";
 
-        /// SORTOWANIE TOPOLOGICZNE GRAFU NA KOLEJCE
-        queue < int > zeroweStopnie;
-        bool juzOdwiedzone[iloscTrunkow];
-        bool juzWKolejce[iloscTrunkow];
-        for(int i = 0; i < iloscTrunkow; i++) {
-            juzOdwiedzone[i] = false;
-            juzWKolejce[i] = false;
+        /// TOPOLOGICAL SORT OF GRAPH - IMPLEMENTATION WITH QUEUE
+        queue < int > zeroDegree;
+        bool visited[beveragesNumber];
+        bool inQueue[beveragesNumber];
+        for(int i = 0; i < beveragesNumber; i++) {
+            visited[i] = false;
+            inQueue[i] = false;
         }
 
-        /// wrzucam wszystkie zerowe na poczatek
-        for(int i = 0; i < graf.size(); i++) {
-            if(!graf[i].size()) {
-                zeroweStopnie.push(i);
-                juzWKolejce[i] = true;
+        /// add first zero degree vertex
+        for(int i = 0; i < graph.size(); i++) {
+            if(!graph[i].size()) {
+                zeroDegree.push(i);
+                inQueue[i] = true;
                 break;
             }
         }
 
-        /// zaczynamy sortowanie
-        while(!zeroweStopnie.empty()) {
-            /// ustalam pozycje na pierwszy wierzcholek stopnia 0
-            int badanyWierzcholek = zeroweStopnie.front();
-            juzOdwiedzone[badanyWierzcholek] = true;
-            /// wypisuje ten wierzcholek
-            cout << " " << napoje[badanyWierzcholek];
-            /// usuwam wszystkie powiazania z tym wierzcholkiem z innych wierzcholkow
-            for(int i = 0; i < graf.size(); i++) {
-                if(i != badanyWierzcholek) {
-                    for(int j = 0; j < graf[i].size(); j++) {
-                        if(graf[i][j] == badanyWierzcholek) {
-                            vector < int >::iterator it = graf[i].begin()+j;
-                            graf[i].erase(it);
+        /// start sorting
+        while(!zeroDegree.empty()) {
+            /// first zero degree vertex
+            int actualVertex = zeroDegree.front();
+            visited[actualVertex] = true;
+            /// write it to the output
+            cout << " " << beverages[actualVertex];
+            /// delete all edges with this vertex
+            for(int i = 0; i < graph.size(); i++) {
+                if(i != actualVertex) {
+                    for(int j = 0; j < graph[i].size(); j++) {
+                        if(graph[i][j] == actualVertex) {
+                            vector < int >::iterator it = graph[i].begin()+j;
+                            graph[i].erase(it);
                             break;
                         }
                     }
                 }
             }
-            /// usuwam badany wierzcholek z kolejki
-            zeroweStopnie.pop();
-            /// dodaje wszystkie wierzcholki zerowe po tych operacjach i przechodze do nastepnej iteracji
-            for(int i = 0; i < graf.size(); i++) {
-                if((juzOdwiedzone[i] == false) && (juzWKolejce[i] == false) && (graf[i].size() == 0)) {
-                    zeroweStopnie.push(i);
-                    juzWKolejce[i] = true;
+            /// delete this vertex from queue
+            zeroDegree.pop();
+            /// after operations add new zero degree vertex into the queue
+            for(int i = 0; i < graph.size(); i++) {
+                if((visited[i] == false) && (inQueue[i] == false) && (graph[i].size() == 0)) {
+                    zeroDegree.push(i);
+                    inQueue[i] = true;
                     break;
                 }
             }
