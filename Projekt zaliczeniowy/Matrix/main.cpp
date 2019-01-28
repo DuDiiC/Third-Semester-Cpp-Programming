@@ -167,9 +167,8 @@ int main() {
             break;
         }
         }
-    } else if(mType == 3) {
-        exit(0);
     }
+
     return 0;
 }
 
@@ -185,6 +184,7 @@ void introdutionMenu(int &matrixType, int &matrixClass) {
     cout << "Twoj wybor: ";
     cin >> matrixType;
     cout << endl;
+    if(matrixType == 3) exit(0);
 
     cout << "---------------------------------------" << endl << endl;
     cout << "Wybierz, na jakiego typu macierzy chcesz pracowac:" << endl;
@@ -238,7 +238,7 @@ void choiceOperationForMatrix(int option, Matrix<T, R, C> &m) {
         cout << m << endl;
     } else if(option == 2) {
         int firstColumn, secondColumn;
-        cout << "Ktore dwa wiersze chcesz zamienic?" << endl;
+        cout << "Ktore dwie kolumny chcesz zamienic?" << endl;
         cin >> firstColumn >> secondColumn;
         m.swapCol(firstColumn, secondColumn);
         cout << m << endl;
@@ -368,7 +368,7 @@ void choiceOperationForSquareMatrix(int option, SquareMatrix<T, N> &sm) {
         cout << sm << endl;
     } else if(option == 2) {
         int firstColumn, secondColumn;
-        cout << "Ktore dwa wiersze chcesz zamienic?" << endl;
+        cout << "Ktore dwie kolumny chcesz zamienic?" << endl;
         cin >> firstColumn >> secondColumn;
         sm.swapCol(firstColumn, secondColumn);
         cout << sm << endl;
