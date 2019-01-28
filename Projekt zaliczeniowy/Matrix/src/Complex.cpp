@@ -48,7 +48,6 @@ Complex& Complex::operator+=(const Complex &c) {
     return *this;
 }
 
-
 Complex Complex::operator-(const Complex &c) const {
 
     Rational re, im;
@@ -145,6 +144,30 @@ bool operator==(const Complex &c1, const Complex &c2) {
 
 bool operator!=(const Complex &c1, const Complex &c2) {
     return !(c1==c2);
+}
+
+bool operator<(const Complex &c1, const Complex &c2) {
+    if(c1.realPart != Rational(0) && c2.realPart != Rational(0)) {
+        return c1.realPart < c2.realPart;
+    } else if(c1.realPart != Rational(0) && c2.realPart == Rational(0)) {
+        return c1.imaginaryPart < c2.imaginaryPart;
+    } else if(c1.realPart == Rational(0) && c2.realPart != Rational(0)) {
+        return c1.imaginaryPart < c2.imaginaryPart;
+    } else {
+        return c1.imaginaryPart < c2.imaginaryPart;
+    }
+}
+
+bool operator>(const Complex &c1, const Complex &c2) {
+    if(c1.realPart != Rational(0) && c2.realPart != Rational(0)) {
+        return c1.realPart > c2.realPart;
+    } else if(c1.realPart != Rational(0) && c2.realPart == Rational(0)) {
+        return c1.imaginaryPart > c2.imaginaryPart;
+    } else if(c1.realPart == Rational(0) && c2.realPart != Rational(0)) {
+        return c1.imaginaryPart > c2.imaginaryPart;
+    } else {
+        return c1.imaginaryPart > c2.imaginaryPart;
+    }
 }
 
 ostream& operator<<(ostream &output, const Complex &c) {
