@@ -17,3 +17,5 @@ I used the functional and objected-oriented programming paradigm and the C++14 s
 - inheritance
 - virtual classes and methods
 - polimorphism
+- templates
+- STL
